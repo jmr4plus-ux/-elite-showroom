@@ -1,0 +1,1011 @@
+برمجه وتطوير المبرمج زيـZـاد تحياتي لكم 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معرض النخبة v12 | الإمبراطورية</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Cairo',sans-serif;background:#060911;color:#f8fafc;overflow-x:hidden;user-select:none}
+.glass-card{background:linear-gradient(145deg,rgba(20,29,48,.94),rgba(10,15,27,.98));border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 30px -5px rgba(0,0,0,.7);backdrop-filter:blur(12px);transition:transform .25s,box-shadow .25s,border-color .25s}
+.glass-card:hover{transform:translateY(-3px);border-color:rgba(245,158,11,.35);box-shadow:0 15px 35px -5px rgba(245,158,11,.14)}
+.btn-gold{background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 4px 15px rgba(245,158,11,.3);transition:all .2s}
+.btn-gold:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.08)}
+.btn-emerald{background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 4px 15px rgba(16,185,129,.25);transition:all .2s}
+.btn-emerald:hover:not(:disabled){transform:translateY(-2px)}
+.btn-blue{background:linear-gradient(135deg,#3b82f6,#2563eb);box-shadow:0 4px 15px rgba(59,130,246,.25);transition:all .2s}
+.btn-blue:hover:not(:disabled){transform:translateY(-2px)}
+.btn-purple{background:linear-gradient(135deg,#8b5cf6,#6d28d9);box-shadow:0 4px 15px rgba(139,92,246,.25);transition:all .2s}
+.btn-purple:hover:not(:disabled){transform:translateY(-2px)}
+.btn-vip{background:linear-gradient(135deg,#ec4899,#8b5cf6 50%,#f59e0b);background-size:200% 200%;animation:gs 3s ease infinite;box-shadow:0 0 18px rgba(236,72,153,.45);transition:transform .2s}
+.btn-vip:hover{transform:scale(1.04)}
+@keyframes gs{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 15px rgba(239,68,68,.3)}50%{box-shadow:0 0 28px rgba(239,68,68,.75)}}
+.auction-live-glow{animation:pulseGlow 1.8s infinite}
+@keyframes slideInRight{from{transform:translateX(-100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.toast-enter{animation:slideInRight .35s cubic-bezier(.16,1,.3,1) forwards}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#060911}
+::-webkit-scrollbar-thumb{background:#1e293b;border-radius:9999px}
+::-webkit-scrollbar-thumb:hover{background:#f59e0b}
+input[type=range]{-webkit-appearance:none;background:transparent}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;height:22px;width:22px;border-radius:50%;background:#f59e0b;cursor:pointer;margin-top:-7px;box-shadow:0 0 10px rgba(245,158,11,.8)}
+input[type=range]::-webkit-slider-runnable-track{width:100%;height:8px;cursor:pointer;background:#1e293b;border-radius:999px}
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+<div id="toast-container" class="fixed bottom-4 left-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4"></div>
+
+<header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 px-3 sm:px-5 py-3 shadow-xl">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2.5">
+<div class="flex items-center gap-3">
+<div id="logo-display" class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg text-xl cursor-pointer" onclick="changeLogo()">🚗</div>
+<div>
+<div class="flex items-center gap-2">
+<h1 id="showroom-name" class="text-lg sm:text-xl font-black text-white">معرض النخبة</h1>
+<span id="stat-level-badge" class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[11px] font-black px-2 py-0.5 rounded-lg">مستوى 1</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-24 sm:w-32 h-1.5 bg-slate-800 rounded-full overflow-hidden"><div id="xp-bar" class="h-full bg-gradient-to-l from-amber-400 to-amber-600 transition-all" style="width:10%"></div></div>
+<span id="xp-text" class="text-[10px] text-slate-400 font-bold">0/100 XP</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 flex-wrap">
+<button onclick="activateRoyalSupport()" class="btn-vip text-white font-black px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer border border-white/20">👑 دعم ملكي +$10M</button>
+<div class="bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-xl flex items-center gap-1.5"><span class="text-emerald-400 text-sm">💵</span><span id="stat-money" class="font-black text-emerald-400 text-sm sm:text-base">$30,000</span></div>
+<div class="bg-slate-900/90 border border-slate-800 px-2.5 py-1.5 rounded-xl flex items-center gap-1"><span class="text-pink-400 text-sm">⭐</span><span id="stat-fame" class="font-black text-pink-400 text-xs sm:text-sm">0</span></div>
+<div class="bg-slate-900/90 border border-slate-800 px-2.5 py-1.5 rounded-xl flex items-center gap-1"><span class="text-blue-400 text-sm">👥</span><span id="stat-followers" class="font-black text-blue-400 text-xs sm:text-sm">0</span></div>
+<div class="bg-slate-900/90 border border-slate-800 px-2.5 py-1.5 rounded-xl flex items-center gap-1"><span class="text-blue-400 text-sm">📅</span><span id="stat-day" class="font-black text-white text-xs sm:text-sm">يوم 1</span></div>
+<button onclick="toggleSound()" id="btn-sound" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-2 rounded-xl text-slate-300">🔊</button>
+<button onclick="nextDay()" class="btn-gold text-slate-950 font-black px-3.5 py-2 rounded-xl text-xs sm:text-sm flex items-center gap-1.5">إنهاء اليوم <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></button>
+</div>
+</div>
+<div id="daily-event-banner" class="max-w-7xl mx-auto mt-2.5 bg-gradient-to-l from-indigo-950/90 via-slate-900/90 to-indigo-950/90 border border-indigo-500/30 rounded-xl px-3 py-1.5 flex items-center justify-between text-xs">
+<div class="flex items-center gap-2"><span class="bg-indigo-500 text-white font-black px-2 py-0.5 rounded-md text-[10px]">حدث اليوم</span><span id="daily-event-text" class="text-indigo-200 font-semibold">سوق مستقر</span></div>
+<span id="active-ads-badge" class="hidden sm:inline-block text-amber-400 font-bold"></span>
+</div>
+</header>
+
+<nav class="max-w-7xl mx-auto w-full px-3 sm:px-5 pt-4 pb-2">
+<div class="grid grid-cols-3 sm:grid-cols-9 gap-1.5 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800">
+<button onclick="switchTab('market')" id="tab-market" class="tab-btn py-2 px-1 rounded-xl font-bold text-[11px] sm:text-xs transition-all flex items-center justify-center gap-1 bg-amber-500 text-slate-950 shadow-md">🛒 السوق</button>
+<button onclick="switchTab('auction')" id="tab-auction" class="tab-btn py-2 px-1 rounded-xl font-bold text-[11px] sm:text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-1">🏛️ المزادات</button>
+<button onclick="switchTab('garage')" id="tab-garage" class="tab-btn py-2 px-1 rounded-xl font-bold text-[11px] sm:text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-1">🔧 المعرض <span id="badge-garage" class="bg-slate-800 text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full font-black">0/4</span></button>
+<button onclick="switchTab('offers')" id="tab-offers" class="tab-btn py-2 px-1 rounded-xl font-bold text-[11px] sm:text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-1">🤝 العروض <span id="badge-offers" class="bg-slate-800 text-slate-300 text-[10px] px-1.5 py-0.5 rounded-full font-black">0</span></button>
+<button onclick="switchTab('plates')" id="tab-plates" class="tab-btn py-2 px-1 rounded-xl font-bold text-[11px] sm:text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-1">🔢 اللوحات</button>
+<button onclick="switchTab('stocks')" id="tab-stocks" class="tab-btn py-2 px-1 rounded-xl font-bold text-[11px] sm:text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-1">📈 الأسهم</button>
+<button onclick="switchTab('invest')" id="tab-invest" class="tab-btn py-2 px-1 rounded-xl font-bold text-[11px] sm:text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-1">🏢 الاستثمار</button>
+<button onclick="switchTab('staff')" id="tab-staff" class="tab-btn py-2 px-1 rounded-xl font-bold text-[11px] sm:text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-1">👥 الموظفون</button>
+<button onclick="switchTab('management')" id="tab-management" class="tab-btn py-2 px-1 rounded-xl font-bold text-[11px] sm:text-xs text-slate-300 hover:text-white transition-all flex items-center justify-center gap-1">⚙️ الإدارة</button>
+</div>
+</nav>
+
+<main class="max-w-7xl mx-auto w-full px-3 sm:px-5 py-4 flex-1">
+
+<section id="view-market" class="space-y-4">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
+<div><h2 class="text-base sm:text-lg font-black text-white">سوق السيارات المستعملة (بورصة متقلبة)</h2><p class="text-xs text-slate-400">افحص، فاوض، أو اشترِ الكل بضغطة!</p></div>
+<div class="flex flex-wrap items-center gap-2 text-xs">
+<button onclick="buyAllMarketCars()" id="btn-buy-all-market" class="btn-emerald text-white font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-1.5">⚡ شراء الكل <span id="buy-all-market-cost" class="bg-black/30 px-2 py-0.5 rounded-lg">$0</span></button>
+<span class="bg-slate-800 text-slate-300 px-3 py-2 rounded-xl border border-slate-700">🔍 فحص: <strong class="text-amber-400">$250</strong></span>
+</div>
+</div>
+<div id="market-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</section>
+
+<section id="view-auction" class="hidden space-y-5">
+<div id="auction-halls-selector" class="space-y-4">
+<div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl"><h2 class="text-base sm:text-lg font-black text-white">🏛️ صالات المزادات (6 صالات)</h2><p class="text-xs text-slate-400 mt-0.5">من السيارات العادية حتى سيارات المليارديرات الفلكية!</p></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5" id="halls-cards-grid"></div>
+</div>
+<div id="auction-room-container" class="hidden max-w-3xl mx-auto space-y-4">
+<div class="flex items-center justify-between bg-slate-900/80 border border-slate-800 p-3.5 rounded-2xl">
+<button onclick="exitAuctionHall()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs">➔ رجوع</button>
+<span id="active-hall-badge" class="font-black text-sm text-amber-400">صالة المزاد</span>
+<button onclick="rerollHallAuction()" class="btn-purple text-white font-bold px-3.5 py-2 rounded-xl text-xs">🔄 سيارة أخرى</button>
+</div>
+<div id="auction-arena"></div>
+</div>
+</section>
+
+<section id="view-garage" class="hidden space-y-4">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
+<div><h2 class="text-base sm:text-lg font-black text-white">معرضك وورشة التعديل (<span id="garage-cap-text">0/4</span>)</h2><p class="text-xs text-slate-400">صلّح، ركّب تيربو، أو اعرض الكل للبيع دفعة واحدة</p></div>
+<div class="flex flex-wrap items-center gap-2 text-xs">
+<button onclick="listAllCarsForSale()" id="btn-list-all-garage" class="btn-gold text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm">🏷️ عرض الكل للبيع</button>
+<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-2 rounded-xl font-bold">✨ ديكور: <span id="garage-decor-lvl">1</span></span>
+</div>
+</div>
+<div id="garage-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</section>
+
+<section id="view-offers" class="hidden space-y-4">
+<div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+<div><h2 class="text-base sm:text-lg font-black text-white">عروض الزبائن (تفاوض لانهائي)</h2><p class="text-xs text-slate-400">اقبل أو فاوض لرفع السعر</p></div>
+<span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1.5 rounded-xl text-xs font-bold">💬 تفاوض مباشر</span>
+</div>
+<div id="offers-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+</section>
+
+<section id="view-plates" class="hidden space-y-4">
+<div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+<div><h2 class="text-base sm:text-lg font-black text-white">🔢 سوق الأرقام واللوحات الملكية (<span id="plates-cap-text">0/30</span>)</h2><p class="text-xs text-slate-400">اشترِ لوحات نادرة، خزّنها، وبعها بربح — ترفع شهرتك أيضاً!</p></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div class="glass-card rounded-3xl p-4 space-y-3">
+<div class="flex justify-between items-center">
+<h3 class="font-black text-white text-sm">🏪 سوق اللوحات المتاحة</h3>
+<button onclick="refreshPlateMarket()" class="btn-blue text-white font-bold px-3 py-1.5 rounded-lg text-xs">🔄 تحديث ($500)</button>
+</div>
+<div id="plate-market-list" class="space-y-2 max-h-96 overflow-y-auto pr-1"></div>
+</div>
+<div class="glass-card rounded-3xl p-4 space-y-3">
+<div class="flex justify-between items-center">
+<h3 class="font-black text-white text-sm">🗄️ لوحاتي المخزنة</h3>
+<button onclick="startPlateAuction()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs">🔴 مزاد حي</button>
+</div>
+<div id="plate-inventory-list" class="space-y-2 max-h-96 overflow-y-auto pr-1"></div>
+</div>
+</div>
+<div id="plate-auction-room" class="hidden glass-card rounded-3xl p-5 border-2 border-rose-500/50 auction-live-glow mt-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-black text-white text-lg">🔴 مزاد اللوحات الحي</h3>
+<div class="bg-slate-950 border border-slate-800 px-3 py-1 rounded-xl font-black text-sm text-amber-400" id="plate-auc-timer">⏱️ 15 ث</div>
+</div>
+<div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-800 text-center mb-4">
+<div id="plate-auc-badge" class="mb-2"></div>
+<div id="plate-auc-text" class="font-black text-4xl text-white tracking-widest bg-slate-900 border-2 border-slate-700 rounded-xl px-4 py-2 inline-block mb-2"></div>
+<p class="text-xs text-slate-400">صاحب أعلى مزايدة: <span id="plate-auc-highest" class="font-bold text-amber-400">لا أحد</span></p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+<button onclick="placePlateBid(1000)" class="btn-gold text-slate-950 font-black py-2.5 rounded-xl text-xs">+$1,000</button>
+<button onclick="placePlateBid(5000)" class="btn-gold text-slate-950 font-black py-2.5 rounded-xl text-xs">+$5,000</button>
+<button onclick="placePlateBid(10000)" class="btn-gold text-slate-950 font-black py-2.5 rounded-xl text-xs">+$10,000</button>
+<button onclick="placePlateBid(50000)" class="btn-purple text-white font-black py-2.5 rounded-xl text-xs">+$50,000 🔥</button>
+</div>
+<div class="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800 flex justify-between items-center">
+<div><span class="text-xs text-slate-400 block">أعلى مزايدة حالياً</span><span id="plate-auc-current" class="text-xl font-black text-amber-400">$0</span></div>
+<button onclick="instantBuyPlateAuction()" class="btn-emerald text-white font-black py-2.5 px-4 rounded-xl text-xs">⚡ حسم فوري ($<span id="plate-auc-buyout">0</span>)</button>
+</div>
+</div>
+</section>
+
+<section id="view-stocks" class="hidden space-y-4">
+<div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
+<h2 class="text-base sm:text-lg font-black text-white">📈 سوق الأسهم والاستثمار</h2>
+<p class="text-xs text-slate-400">اشترِ أسهماً بسعر منخفض وبعها بسعر مرتفع لجمع المال!</p>
+</div>
+<div id="stocks-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</section>
+
+<section id="view-invest" class="hidden space-y-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="glass-card rounded-3xl p-5 space-y-4">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl">🏢</div><div><h3 class="font-black text-white">العقارات</h3><p class="text-xs text-slate-400">اشترِ عقارات لزيادة الدخل اليومي</p></div></div>
+<div id="realestate-list" class="space-y-2"></div>
+</div>
+<div class="glass-card rounded-3xl p-5 space-y-4">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl">📢</div><div><h3 class="font-black text-white">التسويق والمشاهير</h3><p class="text-xs text-slate-400">سوشيال ميديا ومشاهير لزيادة الشهرة</p></div></div>
+<div class="space-y-3">
+<button onclick="buySocialMedia()" class="w-full btn-blue text-white font-bold py-2.5 rounded-xl text-xs">📱 حملة سوشيال ميديا ($5,000) - +100 شهرة ومتابعين</button>
+<button onclick="hireCelebrity()" class="w-full btn-purple text-white font-bold py-2.5 rounded-xl text-xs">🌟 توظيف مشهور ($50,000) - +1000 شهرة فورية</button>
+</div>
+</div>
+<div class="glass-card rounded-3xl p-5 space-y-4 md:col-span-2 border-2 border-rose-500/50">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-xl">🎰</div><div><h3 class="font-black text-white">كازينو السيارات</h3><p class="text-xs text-slate-400">راهن بفلوسك، إما تتضاعف أو تخسرها!</p></div></div>
+<div class="flex gap-2 items-center">
+<input type="number" id="casino-bet" placeholder="مبلغ الرهان..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
+<button onclick="playCasino('red')" class="flex-1 bg-rose-600 hover:bg-rose-500 text-white font-black py-2 rounded-xl text-xs">أحمر (x2)</button>
+<button onclick="playCasino('black')" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-black py-2 rounded-xl text-xs">أسود (x2)</button>
+<button onclick="playCasino('green')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2 rounded-xl text-xs">أخضر (x14)</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="view-staff" class="hidden space-y-4">
+<div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
+<h2 class="text-base sm:text-lg font-black text-white">👥 الموظفون (Idle Tycoon)</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="glass-card rounded-3xl p-5 space-y-3">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">💼</div><div><h3 class="font-black text-white">موظف مبيعات</h3></div></div>
+<div class="bg-slate-950/70 p-3 rounded-2xl border border-slate-800 text-xs space-y-1">
+<div class="flex justify-between"><span class="text-slate-400">العدد:</span><span id="staff-sellers-count" class="font-black text-emerald-400">0</span></div>
+</div>
+<button onclick="hireStaff('seller')" class="w-full btn-emerald text-white font-bold py-2.5 rounded-xl text-xs">➕ توظيف ($2,500)</button>
+</div>
+<div class="glass-card rounded-3xl p-5 space-y-3">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-xl">📣</div><div><h3 class="font-black text-white">مدير تسويق</h3></div></div>
+<div class="bg-slate-950/70 p-3 rounded-2xl border border-slate-800 text-xs space-y-1">
+<div class="flex justify-between"><span class="text-slate-400">العدد:</span><span id="staff-marketers-count" class="font-black text-pink-400">0</span></div>
+</div>
+<button onclick="hireStaff('marketer')" class="w-full btn-purple text-white font-bold py-2.5 rounded-xl text-xs">➕ توظيف ($3,500)</button>
+</div>
+</div>
+</section>
+
+<section id="view-management" class="hidden space-y-5">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div class="glass-card rounded-3xl p-5 space-y-4">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl">🏢</div><div><h3 class="font-black text-white">تطوير المعرض</h3></div></div>
+<div class="space-y-3 pt-2">
+<div class="bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+<div class="flex justify-between text-sm"><span class="text-slate-300 font-bold">سعة المواقف</span><span id="mgmt-cap" class="text-amber-400 font-black">4/50</span></div>
+<button onclick="upgradeGarage()" id="btn-upgrade-garage" class="w-full btn-blue text-white font-bold py-2.5 rounded-xl text-xs">توسيع</button>
+</div>
+<div class="bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+<div class="flex justify-between text-sm"><span class="text-slate-300 font-bold">ديكور المعرض</span><span id="mgmt-decor" class="text-emerald-400 font-black">مستوى 1</span></div>
+<button onclick="upgradeDecor()" id="btn-upgrade-decor" class="w-full btn-emerald text-white font-bold py-2.5 rounded-xl text-xs">ترقية</button>
+</div>
+</div>
+</div>
+
+<div class="glass-card rounded-3xl p-5 space-y-4">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">🏦</div><div><h3 class="font-black text-white">البنك</h3></div></div>
+<div class="bg-slate-950/70 p-4 rounded-2xl border border-slate-800 space-y-3">
+<div id="bank-status-box"></div>
+<div class="pt-2 border-t border-slate-800 space-y-2">
+<div class="flex gap-2">
+<input type="number" id="loan-input" placeholder="مبلغ القرض..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold text-sm">
+<button onclick="takeCustomLoan()" class="btn-emerald text-white font-bold px-3 py-2 rounded-xl text-xs">اقتراض</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="glass-card rounded-3xl p-5 space-y-4 lg:col-span-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl">🏆</div><div><h3 class="font-black text-white">لوحة الصدارة والمنافسين</h3><p class="text-xs text-slate-400">تصدق على الفقراء لتجعلهم "مستثمر النخبة" 😂</p></div></div>
+<button onclick="donateToAll()" class="btn-gold text-slate-950 font-black px-4 py-2 rounded-xl text-xs">تصدق على الكل ($50,000)</button>
+</div>
+<div id="leaderboard-list" class="space-y-3 mt-3"></div>
+</div>
+
+</div>
+</section>
+
+</main>
+
+<!-- Modals -->
+<div id="modal-negotiate" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+<div class="glass-card max-w-md w-full rounded-3xl p-6 space-y-4 border border-slate-700">
+<div class="flex justify-between items-start"><h3 id="neg-car-name" class="text-xl font-black text-white">-</h3><button onclick="closeModal('modal-negotiate')" class="text-slate-400 hover:text-white text-lg">✕</button></div>
+<div class="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+<div class="flex justify-between text-xs"><span class="text-slate-400">مزاج البائع:</span><span id="neg-mood-text" class="font-bold text-emerald-400">😊 هادئ</span></div>
+<div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden"><div id="neg-mood-bar" class="h-full bg-emerald-500 transition-all" style="width:100%"></div></div>
+<div id="neg-chat-bubble" class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-800 text-xs text-slate-200">البائع: "عطني سعرك."</div>
+</div>
+<div class="bg-slate-900/70 p-3.5 rounded-2xl border border-slate-800 space-y-1.5 text-sm">
+<div class="flex justify-between"><span class="text-slate-400">السعر المطلوب:</span><span id="neg-asking-price" class="font-black text-white">$0</span></div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center"><label class="text-xs font-bold text-slate-300">عرضك:</label><span id="neg-slider-val" class="text-xl font-black text-amber-400">$0</span></div>
+<input type="range" id="neg-slider" oninput="updateNegSlider()" class="w-full">
+</div>
+<div class="grid grid-cols-2 gap-2.5 pt-2 border-t border-slate-800">
+<button onclick="submitNegotiation()" class="btn-gold text-slate-950 font-black py-3 rounded-xl text-sm">💬 تقديم</button>
+<button onclick="buyAtCurrentPrice()" id="btn-buy-direct" class="btn-emerald text-white font-bold py-3 rounded-xl text-sm">شراء</button>
+</div>
+</div>
+</div>
+
+<div id="modal-buyer-negotiate" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+<div class="glass-card max-w-md w-full rounded-3xl p-6 space-y-4 border border-slate-700">
+<div class="flex justify-between items-start"><h3 id="bneg-buyer-name" class="text-xl font-black text-white">-</h3><button onclick="closeModal('modal-buyer-negotiate')" class="text-slate-400 hover:text-white text-lg">✕</button></div>
+<div class="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+<div class="flex justify-between text-xs"><span class="text-slate-400">حماس الزبون:</span><span id="bneg-mood-text" class="font-bold text-emerald-400">😄 متحمس</span></div>
+<div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden"><div id="bneg-mood-bar" class="h-full bg-emerald-500 transition-all" style="width:100%"></div></div>
+<div id="bneg-chat-bubble" class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-800 text-xs text-slate-200">الزبون: "هذا عرضي!"</div>
+</div>
+<div class="bg-slate-900/70 p-3.5 rounded-2xl border border-slate-800 space-y-1.5 text-xs">
+<div class="flex justify-between"><span class="text-slate-400">عرض الزبون:</span><span id="bneg-current-offer" class="font-black text-emerald-400">$0</span></div>
+<div class="flex justify-between"><span class="text-slate-400">ربحك:</span><span id="bneg-current-profit" class="font-bold text-amber-400">$0</span></div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center"><label class="text-xs font-bold text-slate-300">السعر المطلوب:</label><span id="bneg-slider-val" class="text-xl font-black text-amber-400">$0</span></div>
+<input type="range" id="bneg-slider" oninput="updateBuyerNegSlider()" class="w-full">
+</div>
+<div class="grid grid-cols-2 gap-2.5 pt-2 border-t border-slate-800">
+<button onclick="submitBuyerNegotiation()" class="btn-gold text-slate-950 font-black py-3 rounded-xl text-sm">💬 اطلب</button>
+<button onclick="acceptCurrentBuyerOffer()" id="btn-bneg-accept" class="btn-emerald text-white font-bold py-3 rounded-xl text-sm">بيع</button>
+</div>
+</div>
+</div>
+
+<div id="modal-tuning" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+<div class="glass-card max-w-lg w-full rounded-3xl p-6 space-y-4 border border-slate-700">
+<div class="flex justify-between items-start"><h3 id="tune-car-name" class="text-xl font-black text-white">-</h3><button onclick="closeModal('modal-tuning')" class="text-slate-400 hover:text-white text-lg">✕</button></div>
+<div id="tune-options-list" class="space-y-2.5 max-h-72 overflow-y-auto"></div>
+<button onclick="closeModal('modal-tuning')" class="w-full bg-slate-800 text-white font-bold py-2.5 rounded-xl text-sm">إغلاق</button>
+</div>
+</div>
+
+<div id="modal-list-sale" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+<div class="glass-card max-w-md w-full rounded-3xl p-6 space-y-4 border border-slate-700">
+<div class="flex justify-between items-start"><h3 id="sale-car-name" class="text-xl font-black text-white">-</h3><button onclick="closeModal('modal-list-sale')" class="text-slate-400 hover:text-white text-lg">✕</button></div>
+<div class="space-y-2">
+<label class="block text-xs font-bold text-slate-300">سعر البيع المطلوب ($):</label>
+<input type="number" id="sale-price-input" oninput="updateProfitPreview()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white font-black text-lg">
+<p id="sale-chance-hint" class="text-xs text-amber-400"></p>
+</div>
+<div class="pt-2 flex gap-3">
+<button onclick="confirmListForSale()" class="btn-emerald flex-1 text-white font-bold py-3 rounded-xl text-sm">تأكيد</button>
+<button onclick="closeModal('modal-list-sale')" class="bg-slate-800 text-slate-300 font-bold py-3 px-4 rounded-xl text-sm">إلغاء</button>
+</div>
+</div>
+</div>
+
+<script>
+// ============ SOUND ============
+let soundEnabled = true;
+let audioCtx = null;
+function getAudioCtx(){ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
+function playSound(type){
+if(!soundEnabled) return;
+try{
+const ctx = getAudioCtx(); const osc = ctx.createOscillator(); const gain = ctx.createGain();
+osc.connect(gain); gain.connect(ctx.destination); const now = ctx.currentTime;
+const map = {cash:{t:'sine',f:[587,880],d:.3,g:.15},bid:{t:'triangle',f:[440,660],d:.15,g:.12},repair:{t:'sawtooth',f:[180,320],d:.25,g:.08},error:{t:'sawtooth',f:[160,110],d:.22,g:.12},click:{t:'sine',f:[500],d:.06,g:.06}};
+const cfg = map[type]||map.click; osc.type = cfg.t;
+if(cfg.f.length>1){ osc.frequency.setValueAtTime(cfg.f[0],now); osc.frequency.exponentialRampToValueAtTime(cfg.f[1],now+cfg.d); }
+else { osc.frequency.setValueAtTime(cfg.f[0],now); }
+gain.gain.setValueAtTime(cfg.g,now); gain.gain.exponentialRampToValueAtTime(.01,now+cfg.d);
+osc.start(now); osc.stop(now+cfg.d);
+}catch(e){}
+}
+function toggleSound(){ soundEnabled=!soundEnabled; document.getElementById('btn-sound').textContent=soundEnabled?'🔊':'🔇'; showToast(soundEnabled?'تم تشغيل الصوت':'تم كتم الصوت','info'); }
+
+// ============ DATA ============
+const CAR_DATABASE = [
+{brand:"تويوتا",model:"كامري GLX",year:2020,type:"sedan",rarity:"common",baseVal:13000,hp:203,color:"#e2e8f0"},
+{brand:"هيونداي",model:"سوناتا",year:2021,type:"sedan",rarity:"common",baseVal:14200,hp:191,color:"#38bdf8"},
+{brand:"هوندا",model:"أكورد",year:2020,type:"sedan",rarity:"common",baseVal:15500,hp:252,color:"#64748b"},
+{brand:"كيا",model:"سبورتاج",year:2019,type:"suv",rarity:"common",baseVal:14800,hp:181,color:"#f87171"},
+{brand:"نيسان",model:"باترول",year:2019,type:"suv",rarity:"rare",baseVal:27000,hp:400,color:"#1e293b"},
+{brand:"شيفروليه",model:"تاهو RST",year:2021,type:"suv",rarity:"rare",baseVal:34000,hp:420,color:"#0f172a"},
+{brand:"دودج",model:"تشارجر سكات باك",year:2020,type:"sport",rarity:"rare",baseVal:26500,hp:485,color:"#ef4444"},
+{brand:"فورد",model:"موستانج GT",year:2021,type:"sport",rarity:"rare",baseVal:28500,hp:460,color:"#f59e0b"},
+{brand:"مرسيدس",model:"E300 AMG",year:2020,type:"luxury",rarity:"rare",baseVal:32000,hp:255,color:"#94a3b8"},
+{brand:"بي ام دبليو",model:"M5",year:2020,type:"sport",rarity:"epic",baseVal:48000,hp:617,color:"#3b82f6"},
+{brand:"لكزس",model:"LX 570",year:2020,type:"suv",rarity:"epic",baseVal:52000,hp:383,color:"#f1f5f9"},
+{brand:"رنج روفر",model:"أوتوبيوغرافي",year:2021,type:"suv",rarity:"epic",baseVal:56000,hp:518,color:"#a8a29e"},
+{brand:"تسلا",model:"موديل S بلايد",year:2022,type:"ev",rarity:"epic",baseVal:65000,hp:1020,color:"#dc2626"},
+{brand:"لوسيد",model:"إير سفير",year:2023,type:"ev",rarity:"epic",baseVal:78000,hp:1111,color:"#64748b"},
+{brand:"ريماك",model:"نيفيرا",year:2023,type:"ev",rarity:"legendary",baseVal:950000,hp:1914,color:"#38bdf8"},
+{brand:"بورش",model:"تايكان تيربو S",year:2022,type:"ev",rarity:"rare",baseVal:55000,hp:750,color:"#f8fafc"},
+{brand:"بي ام دبليو",model:"i7 M70",year:2023,type:"ev",rarity:"epic",baseVal:62000,hp:650,color:"#1e293b"},
+{brand:"مرسيدس",model:"S-Class المصفحة",year:2024,type:"mafia",rarity:"legendary",baseVal:2500000,hp:600,color:"#000000"},
+{brand:"رولز رويس",model:"فانتوم مدرعة",year:2024,type:"mafia",rarity:"legendary",baseVal:5000000,hp:563,color:"#111111"},
+{brand:"أودي",model:"A8 L Security",year:2023,type:"mafia",rarity:"legendary",baseVal:1500000,hp:500,color:"#1a1a1a"}
+];
+
+const AUCTION_HALLS = [
+{id:"standard",name:"السيارات العادية",icon:"🚗",badge:"اقتصادية",borderClass:"border-slate-600/60",bgGradient:"from-slate-800/80 to-slate-950",desc:"سيارات يومية بأسعار مناسبة.",priceRange:"$10K - $25K",bidStep:500,aggression:.6,cars:[
+{brand:"تويوتا",model:"كورولا",year:2022,type:"sedan",rarity:"common",baseVal:14500,hp:168,color:"#e2e8f0"},
+{brand:"هيونداي",model:"النترا",year:2023,type:"sedan",rarity:"common",baseVal:16000,hp:159,color:"#38bdf8"},
+{brand:"مازدا",model:"6",year:2021,type:"sedan",rarity:"common",baseVal:18500,hp:187,color:"#dc2626"},
+{brand:"تويوتا",model:"راف فور",year:2022,type:"suv",rarity:"common",baseVal:24000,hp:219,color:"#475569"}
+]},
+{id:"used",name:"المستعملة",icon:"🔑",badge:"صفقات",borderClass:"border-amber-500/40",bgGradient:"from-amber-950/50 to-slate-950",desc:"كلاسيكيات بأسعار تشتعل.",priceRange:"$18K - $55K",bidStep:1000,aggression:.7,cars:[
+{brand:"تويوتا",model:"لاندكروزر GXR",year:2018,type:"suv",rarity:"rare",baseVal:42000,hp:362,color:"#f8fafc"},
+{brand:"دودج",model:"تشارجر هيلكات",year:2019,type:"sport",rarity:"epic",baseVal:49000,hp:707,color:"#ef4444"},
+{brand:"شيفروليه",model:"كمارو SS",year:2020,type:"sport",rarity:"rare",baseVal:33000,hp:455,color:"#eab308"},
+{brand:"لكزس",model:"LS 500",year:2019,type:"luxury",rarity:"rare",baseVal:46000,hp:416,color:"#1e293b"}
+]},
+{id:"brandnew",name:"الجديدة (أصفار)",icon:"✨",badge:"وكالة",borderClass:"border-emerald-500/40",bgGradient:"from-emerald-950/50 to-slate-950",desc:"أحدث موديلات بضمان كامل.",priceRange:"$75K - $220K",bidStep:2500,aggression:.8,cars:[
+{brand:"تويوتا",model:"لاندكروزر 300 GR",year:2026,type:"suv",rarity:"epic",baseVal:92000,hp:409,color:"#ffffff"},
+{brand:"مرسيدس",model:"S580 مايباخ",year:2026,type:"luxury",rarity:"epic",baseVal:185000,hp:496,color:"#0f172a"},
+{brand:"بي ام دبليو",model:"XM ليبل ريد",year:2026,type:"suv",rarity:"epic",baseVal:165000,hp:738,color:"#18181b"},
+{brand:"كاديلاك",model:"اسكاليد V",year:2026,type:"suv",rarity:"epic",baseVal:148000,hp:682,color:"#334155"}
+]},
+{id:"rare",name:"السيارات النادرة",icon:"💎",badge:"محدودة",borderClass:"border-purple-500/50",bgGradient:"from-purple-950/60 to-slate-950",desc:"تحف نادرة معدلة رسمياً.",priceRange:"$280K - $850K",bidStep:10000,aggression:.85,cars:[
+{brand:"مرسيدس",model:"G63 برابوس",year:2025,type:"suv",rarity:"legendary",baseVal:450000,hp:900,color:"#18181b"},
+{brand:"بورش",model:"911 GT3 RS",year:2025,type:"sport",rarity:"legendary",baseVal:380000,hp:518,color:"#22c55e"},
+{brand:"رولز رويس",model:"كولينان",year:2025,type:"luxury",rarity:"legendary",baseVal:620000,hp:610,color:"#3b0764"},
+{brand:"فيراري",model:"SF90",year:2024,type:"sport",rarity:"legendary",baseVal:740000,hp:986,color:"#dc2626"}
+]},
+{id:"legendary",name:"الأساطير",icon:"👑",badge:"هايبر كار",borderClass:"border-rose-500/60",bgGradient:"from-rose-950/70 to-slate-950",desc:"أغلى السيارات في التاريخ!",priceRange:"$1.5M - $4.8M",bidStep:50000,aggression:.9,cars:[
+{brand:"بوغاتي",model:"شيرون SS 300+",year:2024,type:"sport",rarity:"legendary",baseVal:3600000,hp:1600,color:"#f97316"},
+{brand:"كوينيجسيج",model:"جيسكو",year:2025,type:"sport",rarity:"legendary",baseVal:3200000,hp:1600,color:"#f8fafc"},
+{brand:"باغاني",model:"هوايرا R",year:2024,type:"sport",rarity:"legendary",baseVal:2900000,hp:850,color:"#38bdf8"},
+{brand:"لامبورغيني",model:"فينينو",year:2023,type:"sport",rarity:"legendary",baseVal:4500000,hp:750,color:"#ef4444"},
+{brand:"رولز رويس",model:"بوت تيل",year:2025,type:"luxury",rarity:"legendary",baseVal:4200000,hp:563,color:"#0284c7"}
+]},
+{id:"elite",name:"صالة النخبة",icon:"🏆",badge:"مليارديرات",borderClass:"border-amber-400/70",bgGradient:"from-amber-950/80 to-slate-950",desc:"سيارات بمليارات!",priceRange:"$20M - $50B",bidStep:1000000,aggression:.95,cars:[
+{brand:"بوغاتي",model:"لا فويتور",year:2025,type:"sport",rarity:"legendary",baseVal:20000000,hp:1800,color:"#0a0a0a"},
+{brand:"كوينيجسيج",model:"جيسكو أبسولوت",year:2025,type:"sport",rarity:"legendary",baseVal:35000000,hp:1600,color:"#f5f5f5"},
+{brand:"باغاني",model:"هوايرا كودالونغ",year:2024,type:"sport",rarity:"legendary",baseVal:75000000,hp:850,color:"#fbbf24"},
+{brand:"رولز رويس",model:"بوت تيل النخبة",year:2025,type:"luxury",rarity:"legendary",baseVal:150000000,hp:563,color:"#1e40af"},
+{brand:"لامبورغيني",model:"فينينو رودستر",year:2024,type:"sport",rarity:"legendary",baseVal:450000000,hp:750,color:"#eab308"},
+{brand:"مرسيدس",model:"ONE برابوس",year:2024,type:"sport",rarity:"legendary",baseVal:1200000000,hp:1100,color:"#dc2626"},
+{brand:"فيراري",model:"ديتونا SP3",year:2024,type:"sport",rarity:"legendary",baseVal:3000000000,hp:840,color:"#b91c1c"},
+{brand:"أستون مارتن",model:"فالكيري",year:2024,type:"sport",rarity:"legendary",baseVal:5500000000,hp:1160,color:"#047857"},
+{brand:"ماكلارين",model:"سابيدر",year:2024,type:"sport",rarity:"legendary",baseVal:8000000000,hp:800,color:"#f97316"},
+{brand:"هينيسي",model:"فينوم F5M",year:2024,type:"sport",rarity:"legendary",baseVal:15000000000,hp:1817,color:"#1e3a8a"},
+{brand:"سيلك",model:"أوتوفولانت",year:2024,type:"sport",rarity:"legendary",baseVal:22000000000,hp:700,color:"#525252"},
+{brand:"ديفيل",model:"سيكستين",year:2024,type:"sport",rarity:"legendary",baseVal:35000000000,hp:500,color:"#0891b2"},
+{brand:"زينفو",model:"TSR-S",year:2024,type:"sport",rarity:"legendary",baseVal:42000000000,hp:1177,color:"#eab308"},
+{brand:"ريفيرا",model:"GTS",year:2024,type:"sport",rarity:"legendary",baseVal:50000000000,hp:1200,color:"#7f1d1d"}
+]}];
+
+const DAILY_EVENTS = [
+{text:"🔥 ارتفاع الطلب على السيارات الرياضية! (+15%)",multType:"sport",mult:1.15},
+{text:"🚙 موسم البر: SUV مطلوبة (+15%).",multType:"suv",mult:1.15},
+{text:"📉 ركود خفيف: أسعار أقل (-8%).",multType:"all",mult:.92},
+{text:"💎 إقبال على الفارهة (+18%).",multType:"luxury",mult:1.18},
+{text:"🔋 السيارات الكهربائية مطلوبة جداً (+20%).",multType:"ev",mult:1.2},
+{text:"🕶️ المافيا تبحث عن سيارات مدرعة (+50%).",multType:"mafia",mult:1.5},
+{text:"⚖️ سوق مستقر.",multType:"none",mult:1}
+];
+
+const BUYER_NAMES = ["أبو جاسم","أحمد المنصور","سيف العراقي","محمد الشمري","علي البصري","مصطفى الكاظمي","حيدر الدليمي","عمر الفاروق","ياسر التميمي","كرار الساعدي","زياد النعيمي","طارق العبيدي","منتظر الخفاجي","حسين الربيعي","فهد العتيبي","سلطان القحطاني"];
+const RIVAL_BIDDERS = ["مجموعة القابضة","معرض الأسطورة","الخليج موتورز","إمبراطورية الفخامة","تاجر بغداد","النجم الذهبي","مجموعة الرواد","أبو فهد للاستثمار","معرض البرق","تحالف كبار التجار","شيوخ الخليج","صندوق الثروة","ملياردير المدينة","تاجر الشرق","أسطورة الخليج"];
+
+const RIVAL_DEALERS = [
+{id:"r1", name:"تاجر الشرق", money:50000, isInvestor:false},
+{id:"r2", name:"معرض الصحراء", money:120000, isInvestor:false},
+{id:"r3", name:"أسطورة الخليج", money:350000, isInvestor:false},
+{id:"r4", name:"ملياردير المدينة", money:1500000, isInvestor:false},
+{id:"r5", name:"إمبراطور السيارات", money:12000000, isInvestor:false},
+{id:"r6", name:"تاجر بغداد الدولي", money:25000000, isInvestor:false},
+{id:"r7", name:"الخليج موتورز", money:80000000, isInvestor:false},
+{id:"r8", name:"معرض الأسطورة الملكي", money:200000000, isInvestor:false},
+{id:"r9", name:"مجموعة القابضة", money:600000000, isInvestor:false},
+{id:"r10", name:"إمبراطورية الفخامة VIP", money:1500000000, isInvestor:false},
+{id:"r11", name:"شيوخ الخليج", money:5000000000, isInvestor:false},
+{id:"r12", name:"صندوق الثروة السيادي", money:12000000000, isInvestor:false},
+{id:"r13", name:"تحالف كبار التجار", money:30000000000, isInvestor:false},
+{id:"r14", name:"معرض النجم الذهبي", money:75000000000, isInvestor:false},
+{id:"r15", name:"الملياردير المجهول", money:250000000000, isInvestor:false}
+];
+
+const PLATE_PREFIXES = ["أ ب ج","د هـ و","ز ح ط","ي ك ل","م ن س","ع ف ص","ق ر ش","ت ث خ","ذ ض ظ","غ"];
+function generatePlate(){
+let digitCount = [1,1,2,2,2,3,3,3,4,4,4,4,5][Math.floor(Math.random()*13)] || 2;
+let digits = "";
+for(let i=0;i<digitCount;i++) digits += Math.floor(Math.random()*10);
+const isRoyal = digits.length>=4 && /^(\d)\1+$/.test(digits);
+const isGolden = digits.length>=3 && /^(\d)\1+$/.test(digits);
+const rarity = isRoyal ? "royal" : (isGolden ? "golden" : (digits.length>=4 ? "rare" : (digits.length>=3 ? "uncommon" : "common")));
+const rarityMult = {common:1, golden:5, rare:15, royal:60}[rarity] || 1;
+const basePrice = Math.round((500 + Math.random()*2000) * rarityMult);
+const prefix = PLATE_PREFIXES[Math.floor(Math.random()*PLATE_PREFIXES.length)];
+return {
+id: "plate_" + Date.now() + "_" + Math.random().toString(36).substr(2,5),
+text: prefix + " " + digits, digits: digits, rarity: rarity,
+price: basePrice || 1000, marketValue: Math.round((basePrice || 1000) * (1.1 + Math.random()*0.4))
+};
+}
+
+const STOCK_TEMPLATES = [
+{id:"tsla", name:"تسلا", symbol:"TSLA", base:200},
+{id:"aapl", name:"أبل", symbol:"AAPL", base:180},
+{id:"msft", name:"مايكروسوفت", symbol:"MSFT", base:400},
+{id:"aramco", name:"أرامكو", symbol:"ARAMCO", base:30},
+{id:"bitcoin", name:"بيتكوين", symbol:"BTC", base:65000},
+{id:"gold", name:"الذهب", symbol:"GOLD", base:2400}
+];
+
+const REAL_ESTATE = [
+{id:"apartment", name:"شقة سكنية", price:150000, income:500},
+{id:"villa", name:"فيلا فاخرة", price:800000, income:3000},
+{id:"mall", name:"مركز تجاري", price:5000000, income:25000},
+{id:"tower", name:"برج أعمال", price:25000000, income:150000}
+];
+
+let state = {
+money: 30000, totalProfit: 0, level: 1, xp: 0, day: 1,
+garageCapacity: 4, upgradeCost: 15000, decorLevel: 1, decorCost: 10000,
+ads: {socialDays:0, vipDays:0}, loan: null, fame: 0, followers: 0,
+currentEvent: DAILY_EVENTS[6], marketCars: [], garageCars: [], offers: [],
+plateMarket: [], plateInventory: [], plateCapacity: 30,
+staff: { sellers:0, marketers:0 }, staffCosts: { seller: 2500, marketer: 3500 },
+stocks: [], portfolio: {}, leaderboard: JSON.parse(JSON.stringify(RIVAL_DEALERS)),
+realEstate: {}, showroomLogo: "🚗", showroomName: "معرض النخبة"
+};
+
+let auctionState = {active:false, hallId:null, car:null, currentBid:0, highestBidder:"", isPlayerHighest:false, timeLeft:20, bidStep:1000, aggression:.5, maxRivalBid:0, timerId:null};
+let plateAuctionState = {active:false, plate:null, currentBid:0, highestBidder:"", isPlayerHighest:false, timeLeft:15, buyout:0, timerId:null};
+let activeNegCarId = null, activeBuyerOfferId = null, activeTuneCarId = null, activeSaleCarId = null;
+
+function formatMoney(a){ if(isNaN(a)) return "$0"; return "$"+Math.round(a).toLocaleString('en-US'); }
+function addXP(p){ state.xp += p; const req = state.level*100; if(state.xp>=req){ state.xp-=req; state.level++; playSound('cash'); showToast('🎉 مستوى '+state.level+'!','success'); } }
+function addFame(p){ state.fame += p; state.followers += p*10; }
+
+function showToast(msg, type='info'){
+const c = document.getElementById('toast-container'); const t = document.createElement('div');
+const styles = {success:'bg-emerald-950/95 border-emerald-500 text-emerald-200', error:'bg-rose-950/95 border-rose-500 text-rose-200', warning:'bg-amber-950/95 border-amber-500 text-amber-200', info:'bg-slate-900/95 border-blue-500 text-blue-200'};
+const icons = {success:'✅', error:'❌', warning:'⚠️', info:'ℹ️'};
+t.className = `toast-enter pointer-events-auto border-r-4 p-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-bold ${styles[type]}`;
+t.innerHTML = `<span class="text-base">${icons[type]}</span><span>${msg}</span>`;
+c.appendChild(t); setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(-20px)'; t.style.transition='all .3s'; setTimeout(()=>t.remove(),300); }, 3500);
+}
+
+function activateRoyalSupport(){
+state.money += 10000000; if(state.level < 5) state.level = 5;
+state.garageCapacity = 50; state.plateCapacity = 30;
+playSound('cash'); showToast('👑 تم تفعيل الدعم الملكي!', 'success'); updateUI();
+}
+
+function changeLogo() {
+const logos = ["🚗", "🏎️", "🚙", "🚓", "🏁", "🏆", "👑", "💎"];
+const current = logos.indexOf(state.showroomLogo);
+state.showroomLogo = logos[(current + 1) % logos.length];
+document.getElementById('logo-display').textContent = state.showroomLogo;
+showToast('تم تغيير شعار المعرض!', 'success');
+}
+
+function getRarityBadge(r){
+const map = {common:'<span class="bg-slate-800 text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded-md">عادية</span>', rare:'<span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold px-2 py-0.5 rounded-md">نادرة</span>', epic:'<span class="bg-purple-500/20 text-purple-400 border border-purple-500/30 text-[10px] font-bold px-2 py-0.5 rounded-md">مميزة</span>', legendary:'<span class="bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[10px] font-black px-2 py-0.5 rounded-md">👑 أسطورية</span>', mafia:'<span class="bg-black text-rose-500 border border-rose-900 text-[10px] font-black px-2 py-0.5 rounded-md">🕶️ مافيا</span>', uncommon:'<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded-md">غير شائعة</span>', golden:'<span class="bg-amber-400/30 text-amber-300 border border-amber-400/50 text-[10px] font-black px-2 py-0.5 rounded-md">⭐ ذهبية</span>', royal:'<span class="bg-gradient-to-r from-rose-500 to-amber-500 text-white text-[10px] font-black px-2 py-0.5 rounded-md">🏆 ملكية</span>'};
+return map[r]||map.common;
+}
+
+function getCarSVG(type,color,turbo=0){
+const spoiler = turbo>=2?`<path d="M18,40 L32,40 L28,48 L16,48 Z" fill="#f59e0b"/>`:'';
+const glow = turbo===3?`filter: drop-shadow(0 0 8px rgba(245,158,11,.5));`:'';
+if(type==='mafia') return `<svg viewBox="0 0 240 100" class="w-full h-24 sm:h-28" style="${glow}"><ellipse cx="120" cy="88" rx="98" ry="6" fill="rgba(0,0,0,.45)"/>${spoiler}<path d="M20,66 L26,48 L72,30 L145,30 L185,46 L220,52 L222,68 L20,68 Z" fill="#111" stroke="#333" stroke-width="3"/><path d="M76,34 L140,34 L168,46 L65,46 Z" fill="#000" opacity=".9"/><rect x="212" y="53" width="9" height="6" rx="2" fill="#ef4444"/><rect x="20" y="53" width="7" height="7" rx="2" fill="#ef4444"/><circle cx="62" cy="70" r="15" fill="#0a0a0a" stroke="#444" stroke-width="3"/><circle cx="62" cy="70" r="8" fill="#333"/><circle cx="182" cy="70" r="15" fill="#0a0a0a" stroke="#444" stroke-width="3"/><circle cx="182" cy="70" r="8" fill="#333"/></svg>`;
+if(type==='ev') return `<svg viewBox="0 0 240 100" class="w-full h-24 sm:h-28" style="${glow}"><ellipse cx="120" cy="88" rx="96" ry="6" fill="rgba(0,0,0,.45)"/>${spoiler}<path d="M22,66 L28,46 L68,26 L152,26 L186,46 L216,50 L218,68 L22,68 Z" fill="${color}" stroke="#1e293b" stroke-width="2"/><path d="M72,30 L112,30 L112,45 L56,45 Z" fill="#0f172a" opacity=".85"/><path d="M118,30 L148,30 L172,45 L118,45 Z" fill="#0f172a" opacity=".85"/><rect x="210" y="51" width="8" height="7" rx="2" fill="#38bdf8"/><circle cx="62" cy="70" r="15" fill="#0f172a" stroke="#475569" stroke-width="3"/><circle cx="62" cy="70" r="7" fill="#94a3b8"/><circle cx="180" cy="70" r="15" fill="#0f172a" stroke="#475569" stroke-width="3"/><circle cx="180" cy="70" r="7" fill="#94a3b8"/><path d="M120,52 L115,58 L125,58 Z" fill="#38bdf8"/></svg>`;
+if(type==='suv') return `<svg viewBox="0 0 240 100" class="w-full h-24 sm:h-28" style="${glow}"><ellipse cx="120" cy="88" rx="95" ry="7" fill="rgba(0,0,0,.45)"/><path d="M25,65 L28,42 L55,22 L165,22 L195,42 L215,48 L218,68 L25,68 Z" fill="${color}" stroke="#1e293b" stroke-width="2"/><path d="M60,26 L110,26 L110,42 L45,42 Z" fill="#0f172a" opacity=".85"/><rect x="210" y="48" width="8" height="8" rx="2" fill="#fef08a"/><circle cx="62" cy="70" r="16" fill="#0f172a" stroke="#475569" stroke-width="3"/><circle cx="62" cy="70" r="8" fill="#94a3b8"/><circle cx="180" cy="70" r="16" fill="#0f172a" stroke="#475569" stroke-width="3"/><circle cx="180" cy="70" r="8" fill="#94a3b8"/></svg>`;
+if(type==='sport') return `<svg viewBox="0 0 240 100" class="w-full h-24 sm:h-28" style="${glow}"><ellipse cx="120" cy="88" rx="98" ry="6" fill="rgba(0,0,0,.45)"/>${spoiler}<path d="M20,66 L26,48 L72,30 L145,30 L185,46 L220,52 L222,68 L20,68 Z" fill="${color}" stroke="#1e293b" stroke-width="2"/><path d="M76,34 L140,34 L168,46 L65,46 Z" fill="#0f172a" opacity=".88"/><rect x="212" y="53" width="9" height="6" rx="2" fill="#38bdf8"/><circle cx="62" cy="70" r="15" fill="#0f172a" stroke="#475569" stroke-width="3"/><circle cx="62" cy="70" r="8" fill="#cbd5e1"/><circle cx="182" cy="70" r="15" fill="#0f172a" stroke="#475569" stroke-width="3"/><circle cx="182" cy="70" r="8" fill="#cbd5e1"/></svg>`;
+return `<svg viewBox="0 0 240 100" class="w-full h-24 sm:h-28" style="${glow}"><ellipse cx="120" cy="88" rx="96" ry="6" fill="rgba(0,0,0,.45)"/>${spoiler}<path d="M22,66 L28,46 L68,26 L152,26 L186,46 L216,50 L218,68 L22,68 Z" fill="${color}" stroke="#1e293b" stroke-width="2"/><path d="M72,30 L112,30 L112,45 L56,45 Z" fill="#0f172a" opacity=".85"/><path d="M118,30 L148,30 L172,45 L118,45 Z" fill="#0f172a" opacity=".85"/><rect x="210" y="51" width="8" height="7" rx="2" fill="#fef08a"/><circle cx="62" cy="70" r="15" fill="#0f172a" stroke="#475569" stroke-width="3"/><circle cx="62" cy="70" r="7" fill="#94a3b8"/><circle cx="180" cy="70" r="15" fill="#0f172a" stroke="#475569" stroke-width="3"/><circle cx="180" cy="70" r="7" fill="#94a3b8"/></svg>`;
+}
+
+function generateMarketCars(){
+state.marketCars = [];
+const flawPool = [{name:"عطل في الجير",cost:1800},{name:"تهريب زيت",cost:1100},{name:"تلف في التعليق",cost:950},{name:"سليمة 100%",cost:0}];
+for(let i=0;i<25;i++){
+let t = CAR_DATABASE[Math.floor(Math.random()*CAR_DATABASE.length)];
+// المافيا تظهر فقط إذا الشهرة عالية
+if(t.type === 'mafia' && state.fame < 1000) t = CAR_DATABASE[0];
+
+const mileage = Math.floor(Math.random()*130+10)*1000;
+const bodyCond = Math.floor(Math.random()*45+55);
+const mechCond = Math.floor(Math.random()*45+55);
+const flaw = flawPool[Math.floor(Math.random()*flawPool.length)];
+const condFactor = (bodyCond+mechCond)/200;
+let mv = Math.round((t.baseVal*(0.65+condFactor*0.35))/100)*100;
+// بورصة السيارات: تقلب بنسبة 10% صعوداً أو هبوطاً
+mv = Math.round(mv * (0.9 + Math.random()*0.2));
+
+const ask = Math.round((mv*(0.86+Math.random()*0.28))/100)*100;
+state.marketCars.push({
+id:'car_'+Date.now()+'_'+i, brand:t.brand, model:t.model, year:t.year, type:t.type, rarity:t.rarity, color:t.color,
+baseFullValue:t.baseVal, hp:t.hp, mileage, bodyCond, mechCond, turboStage:0, inspected:false,
+hiddenFlaw:flaw, marketValue:mv, askingPrice:ask,
+minAcceptPrice: Math.round((ask*(0.78+Math.random()*0.12))/50)*50, sellerMood:100
+});
+}
+}
+
+function generatePlateMarket(){ state.plateMarket = []; for(let i=0;i<8;i++) state.plateMarket.push(generatePlate()); }
+function initStocks(){ state.stocks = STOCK_TEMPLATES.map(t => ({id:t.id, name:t.name, symbol:t.symbol, price: t.base, history:[t.base]})); }
+function updateStocks(){ state.stocks.forEach(s => { s.price = Math.max(10, Math.round(s.price * (1 + (Math.random() - 0.48) * 0.1))); s.history.push(s.price); if(s.history.length > 15) s.history.shift(); }); }
+
+function updateUI(){
+document.getElementById('logo-display').textContent = state.showroomLogo;
+document.getElementById('showroom-name').textContent = state.showroomName;
+document.getElementById('stat-money').textContent = formatMoney(state.money);
+document.getElementById('stat-fame').textContent = state.fame.toLocaleString();
+document.getElementById('stat-followers').textContent = state.followers.toLocaleString();
+document.getElementById('stat-day').textContent = `يوم ${state.day}`;
+document.getElementById('stat-level-badge').textContent = `مستوى ${state.level}`;
+const reqXP = state.level*100; const xpP = Math.min(100, Math.round((state.xp/reqXP)*100));
+document.getElementById('xp-bar').style.width = xpP+'%'; document.getElementById('xp-text').textContent = `${state.xp}/${reqXP} XP`;
+document.getElementById('daily-event-text').textContent = state.currentEvent.text;
+const adsB = document.getElementById('active-ads-badge'); let ads = [];
+if(state.ads.socialDays>0) ads.push(`📱 (${state.ads.socialDays}ي)`); if(state.ads.vipDays>0) ads.push(`💎 (${state.ads.vipDays}ي)`);
+if(ads.length){ adsB.textContent='نشط: '+ads.join(' | '); adsB.classList.remove('hidden'); } else adsB.classList.add('hidden');
+document.getElementById('badge-garage').textContent = `${state.garageCars.length}/${state.garageCapacity}`;
+document.getElementById('garage-cap-text').textContent = `${state.garageCars.length}/${state.garageCapacity}`;
+document.getElementById('garage-decor-lvl').textContent = state.decorLevel;
+document.getElementById('badge-offers').textContent = state.offers.length;
+document.getElementById('plates-cap-text').textContent = `${state.plateInventory.length}/${state.plateCapacity}`;
+const totalMarket = state.marketCars.reduce((s,c)=>s+c.askingPrice,0);
+document.getElementById('buy-all-market-cost').textContent = formatMoney(totalMarket);
+document.getElementById('btn-buy-all-market').disabled = state.marketCars.length===0;
+document.getElementById('btn-list-all-garage').disabled = state.garageCars.filter(c=>!c.listedForSale).length===0;
+document.getElementById('mgmt-cap').textContent = `${state.garageCapacity} / 50`;
+document.getElementById('mgmt-decor').textContent = `مستوى ${state.decorLevel}`;
+const upCap = document.getElementById('btn-upgrade-garage');
+if(state.garageCapacity>=50){ upCap.textContent='أقصى سعة 🏆'; upCap.disabled=true; } else { upCap.textContent=`توسيع (${formatMoney(state.upgradeCost)})`; upCap.disabled=false; }
+const upDec = document.getElementById('btn-upgrade-decor');
+if(state.decorLevel>=5){ upDec.textContent='أقصى فخامة 👑'; upDec.disabled=true; } else { upDec.textContent=`ترقية (${formatMoney(state.decorCost)})`; upDec.disabled=false; }
+document.getElementById('staff-sellers-count').textContent = state.staff.sellers;
+document.getElementById('staff-marketers-count').textContent = state.staff.marketers;
+renderBank(); renderMarket(); renderGarage(); renderOffers(); renderPlateMarket(); renderPlateInventory(); renderStocks(); renderLeaderboard(); renderRealEstate();
+}
+
+function buyAllMarketCars(){
+if(state.marketCars.length===0) return;
+const free = state.garageCapacity - state.garageCars.length;
+if(free < state.marketCars.length){ playSound('error'); showToast(`تحتاج ${state.marketCars.length} مواقف! المتاح ${free}`,'error'); return; }
+const total = state.marketCars.reduce((s,c)=>s+c.askingPrice,0);
+if(state.money < total){ playSound('error'); showToast('رصيدك لا يكفي!','error'); return; }
+const count = state.marketCars.length; state.money -= total;
+state.marketCars.forEach(c=>state.garageCars.push({...c, totalCost:c.askingPrice, listedForSale:false, listPrice:0}));
+state.marketCars = []; addXP(count*12); playSound('cash'); showToast(`⚡ اشتريت ${count} سيارة!`,'success'); updateUI();
+}
+
+function listAllCarsForSale(){
+const unlisted = state.garageCars.filter(c=>!c.listedForSale);
+if(unlisted.length===0){ showToast('كل السيارات معروضة','info'); return; }
+let n=0; unlisted.forEach(c=>{ const v = getEffectiveValue(c); c.listedForSale = true; c.listPrice = v; n++; if(Math.random()>0.25) generateOfferForCar(c); });
+playSound('cash'); showToast(`🏷️ عرضت ${n} سيارة للبيع`,'success'); updateUI();
+}
+
+function renderMarket(){
+const g = document.getElementById('market-grid');
+if(state.marketCars.length===0){ g.innerHTML=`<div class="col-span-full glass-card rounded-3xl p-10 text-center space-y-3"><div class="text-4xl">🏁</div><h3 class="text-lg font-bold text-white">تم شراء كل سيارات السوق!</h3></div>`; return; }
+g.innerHTML = state.marketCars.map(c=>{
+const isDeal = c.askingPrice <= c.marketValue;
+return `<div class="glass-card rounded-3xl p-4 sm:p-5 flex flex-col justify-between space-y-3">
+<div>
+<div class="flex justify-between items-start gap-2"><div><div class="flex items-center gap-1.5 mb-1">${getRarityBadge(c.rarity)}<span class="text-[11px] text-slate-400">${c.year}</span></div><h3 class="text-base sm:text-lg font-black text-white">${c.brand} ${c.model}</h3></div><span class="text-xs font-bold bg-slate-800 text-amber-400 px-2 py-1 rounded-lg">${c.hp} HP</span></div>
+<div class="bg-slate-950/70 rounded-2xl p-2 my-2.5 border border-slate-800/80 relative">${isDeal?'<span class="absolute top-2 right-2 bg-emerald-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md">🔥 لقطة</span>':''}${getCarSVG(c.type,c.color)}</div>
+<div class="space-y-1 text-xs sm:text-sm bg-slate-950/60 p-3 rounded-2xl border border-slate-800/80">
+<div class="flex justify-between"><span class="text-slate-400">القيمة:</span><span class="font-bold text-slate-200">${formatMoney(c.marketValue)}</span></div>
+<div class="flex justify-between items-center"><span class="text-slate-400">السعر:</span><span class="font-black text-base sm:text-lg text-amber-400">${formatMoney(c.askingPrice)}</span></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button onclick="openNegotiate('${c.id}')" class="bg-slate-800 text-amber-400 font-bold py-2.5 rounded-xl text-xs">💬 فاوض</button>
+<button onclick="directBuy('${c.id}')" class="btn-emerald text-white font-bold py-2.5 rounded-xl text-xs">شراء</button>
+</div>
+</div>`;
+}).join('');
+}
+
+function renderGarage(){
+const g = document.getElementById('garage-grid');
+if(state.garageCars.length===0){ g.innerHTML=`<div class="col-span-full glass-card rounded-3xl p-10 text-center space-y-3"><div class="text-4xl">🏢</div><h3 class="text-lg font-bold text-white">المعرض فارغ</h3></div>`; return; }
+g.innerHTML = state.garageCars.map(c=>{
+const mv = getEffectiveValue(c);
+return `<div class="glass-card rounded-3xl p-4 sm:p-5 flex flex-col justify-between space-y-3 ${c.listedForSale?'border-emerald-500/50':''}">
+<div>
+<div class="flex justify-between items-start gap-2"><div><div class="flex items-center gap-1.5 mb-1">${getRarityBadge(c.rarity)}</div><h3 class="text-base sm:text-lg font-black text-white">${c.brand} ${c.model}</h3></div><span class="text-xs font-bold bg-slate-800 text-amber-400 px-2 py-1 rounded-lg">${c.hp} HP</span></div>
+<div class="bg-slate-950/70 rounded-2xl p-2 my-2.5 border border-slate-800/80 relative">${c.listedForSale?'<span class="absolute top-2 right-2 bg-emerald-500 text-slate-950 text-[11px] font-black px-2.5 py-0.5 rounded-full animate-pulse">معروضة</span>':''}${getCarSVG(c.type,c.color,c.turboStage)}</div>
+<div class="space-y-1 text-xs sm:text-sm bg-slate-950/60 p-3 rounded-2xl border border-slate-800/80">
+<div class="flex justify-between"><span class="text-slate-400">تكلفتها:</span><span class="font-bold text-rose-400">${formatMoney(c.totalCost)}</span></div>
+<div class="flex justify-between"><span class="text-slate-400">القيمة:</span><span class="font-bold text-emerald-400">${formatMoney(mv)}</span></div>
+</div>
+</div>
+<div class="space-y-2 pt-1">
+${!c.listedForSale?`<div class="grid grid-cols-2 gap-2"><button onclick="openTuning('${c.id}')" class="btn-blue text-white font-bold py-2.5 rounded-xl text-xs">🔧 ورشة</button><button onclick="openSale('${c.id}')" class="btn-emerald text-white font-bold py-2.5 rounded-xl text-xs">🏷️ للبيع</button></div>`:`<button onclick="unlistCar('${c.id}')" class="w-full bg-slate-800 text-slate-300 font-bold py-2.5 rounded-xl text-xs">سحب</button>`}
+</div>
+</div>`;
+}).join('');
+}
+
+function renderOffers(){
+const l = document.getElementById('offers-list');
+if(state.offers.length===0){ l.innerHTML=`<div class="col-span-full glass-card rounded-3xl p-10 text-center space-y-3"><div class="text-4xl">⏳</div><h3 class="text-lg font-bold text-white">لا عروض حالياً</h3></div>`; return; }
+l.innerHTML = state.offers.map(o=>{
+const c = state.garageCars.find(x=>x.id===o.carId); if(!c) return '';
+const profit = o.offerPrice - c.totalCost; const isP = profit>=0;
+return `<div class="glass-card rounded-3xl p-5 space-y-4 border-r-4 ${isP?'border-r-emerald-500':'border-r-rose-500'}">
+<div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="w-11 h-11 rounded-full bg-slate-800 flex items-center justify-center text-xl">${o.isVIP?'🤵🏻':'🧔🏻'}</div><div><h4 class="font-black text-white text-sm sm:text-base">${o.buyerName}</h4><p class="text-xs text-slate-400">${c.brand} ${c.model}</p></div></div></div>
+<div class="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 flex justify-between items-center">
+<div><span class="text-xs text-slate-400 block">عرض:</span><span class="text-xl font-black text-white">${formatMoney(o.offerPrice)}</span></div>
+<div class="text-left"><span class="text-xs text-slate-400 block">ربح:</span><span class="text-sm font-black ${isP?'text-emerald-400':'text-rose-400'}">${isP?'+':''}${formatMoney(profit)}</span></div>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<button onclick="openBuyerNeg('${o.id}')" class="btn-gold text-slate-950 font-black py-2.5 rounded-xl text-xs">💬 فاوض</button>
+<button onclick="acceptOffer('${o.id}')" class="btn-emerald text-white font-bold py-2.5 rounded-xl text-xs">✅ قبول</button>
+<button onclick="rejectOffer('${o.id}')" class="bg-slate-800 text-slate-300 font-bold py-2.5 rounded-xl text-xs">❌</button>
+</div>
+</div>`;
+}).join('');
+}
+
+function refreshPlateMarket(){ if(state.money<500){ playSound('error'); showToast('تحتاج $500','error'); return; } state.money-=500; generatePlateMarket(); playSound('click'); updateUI(); }
+function buyPlate(plateId){
+const p = state.plateMarket.find(x=>x.id===plateId); if(!p) return;
+if(state.plateInventory.length >= state.plateCapacity){ playSound('error'); showToast('مخزون اللوحات ممتلئ!','error'); return; }
+if(state.money < p.price){ playSound('error'); showToast('رصيدك لا يكفي','error'); return; }
+state.money -= p.price; state.plateMarket = state.plateMarket.filter(x=>x.id!==plateId);
+state.plateInventory.push({...p, buyPrice: p.price}); addFame(p.rarity==='royal'?50:p.rarity==='golden'?25:10); addXP(8); playSound('cash'); updateUI();
+}
+function sellPlate(plateId){
+const idx = state.plateInventory.findIndex(x=>x.id===plateId); if(idx===-1) return;
+const p = state.plateInventory[idx]; const salePrice = Math.round(p.marketValue * (1+((state.decorLevel-1)*0.05)) * Math.min(2, 1+(state.fame/5000)) / 50)*50;
+state.money += salePrice; state.plateInventory.splice(idx,1); addXP(15); playSound('cash'); showToast(`بعت لوحة ${p.text} بـ ${formatMoney(salePrice)}`,'success'); updateUI();
+}
+function renderPlateMarket(){
+const el = document.getElementById('plate-market-list');
+if(state.plateMarket.length===0){ el.innerHTML='<p class="text-xs text-slate-400 text-center py-4">السوق فارغ</p>'; return; }
+el.innerHTML = state.plateMarket.map(p=>`<div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center gap-2"><div><div class="mb-1">${getRarityBadge(p.rarity)}</div><div class="font-black text-white text-sm bg-slate-900 border border-slate-700 rounded px-2 py-1 inline-block">${p.text}</div></div><div class="text-left"><div class="text-amber-400 font-black text-sm mb-1">${formatMoney(p.price)}</div><button onclick="buyPlate('${p.id}')" class="bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg">شراء</button></div></div>`).join('');
+}
+function renderPlateInventory(){
+const el = document.getElementById('plate-inventory-list');
+if(state.plateInventory.length===0){ el.innerHTML='<p class="text-xs text-slate-400 text-center py-4">مخزونك فارغ</p>'; return; }
+el.innerHTML = state.plateInventory.map(p=>`<div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center gap-2"><div><div class="mb-1">${getRarityBadge(p.rarity)}</div><div class="font-black text-white text-sm bg-slate-900 border border-slate-700 rounded px-2 py-1 inline-block">${p.text}</div></div><button onclick="sellPlate('${p.id}')" class="bg-amber-500 text-slate-950 text-xs font-black px-3 py-1.5 rounded-lg">بيع</button></div>`).join('');
+}
+
+function startPlateAuction(){
+if(state.plateMarket.length === 0 && state.plateInventory.length === 0){ showToast('لا يوجد لوحات!','error'); return; }
+if(plateAuctionState.timerId) clearInterval(plateAuctionState.timerId);
+const p = generatePlate(); p.rarity = 'royal'; p.price = Math.round(50000 + Math.random()*150000); p.marketValue = p.price;
+plateAuctionState = {active: true, plate: p, currentBid: Math.round(p.price * 0.4), highestBidder: 'الافتتاح', isPlayerHighest: false, timeLeft: 15, buyout: Math.round(p.price * 2), timerId: null};
+document.getElementById('plate-auction-room').classList.remove('hidden'); renderPlateAuction(); plateAuctionState.timerId = setInterval(plateAuctionTick, 1000);
+}
+function plateAuctionTick(){
+if(!plateAuctionState.active) return; plateAuctionState.timeLeft--;
+if(plateAuctionState.timeLeft > 1 && Math.random() < 0.7){ plateAuctionState.currentBid += Math.round(plateAuctionState.currentBid * (0.05 + Math.random()*0.15)); plateAuctionState.highestBidder = RIVAL_BIDDERS[Math.floor(Math.random()*RIVAL_BIDDERS.length)]; plateAuctionState.isPlayerHighest = false; }
+if(plateAuctionState.timeLeft <= 0) finishPlateAuction(); else renderPlateAuction();
+}
+function placePlateBid(amount){
+if(!plateAuctionState.active) return; const nb = plateAuctionState.currentBid + amount;
+if(state.money < nb){ playSound('error'); showToast('رصيدك لا يكفي','error'); return; } if(state.plateInventory.length >= state.plateCapacity){ showToast('مخزونك ممتلئ','error'); return; }
+plateAuctionState.currentBid = nb; plateAuctionState.highestBidder = 'أنت'; plateAuctionState.isPlayerHighest = true; playSound('bid'); renderPlateAuction();
+}
+function instantBuyPlateAuction(){
+if(!plateAuctionState.active) return; if(state.money < plateAuctionState.buyout){ showToast('رصيدك لا يكفي','error'); return; } if(state.plateInventory.length >= state.plateCapacity){ showToast('مخزونك ممتلئ','error'); return; }
+clearInterval(plateAuctionState.timerId); plateAuctionState.active = false; state.money -= plateAuctionState.buyout; state.plateInventory.push({...plateAuctionState.plate, buyPrice: plateAuctionState.buyout}); addFame(50); playSound('cash'); document.getElementById('plate-auction-room').classList.add('hidden'); updateUI();
+}
+function finishPlateAuction(){
+clearInterval(plateAuctionState.timerId); plateAuctionState.active = false;
+if(plateAuctionState.isPlayerHighest && state.money >= plateAuctionState.currentBid && state.plateInventory.length < state.plateCapacity){ state.money -= plateAuctionState.currentBid; state.plateInventory.push({...plateAuctionState.plate, buyPrice: plateAuctionState.currentBid}); addFame(40); playSound('cash'); showToast(`🏆 ربحت اللوحة!`,'success'); }
+else { showToast(`خسرت المزاد`,'warning'); }
+document.getElementById('plate-auction-room').classList.add('hidden'); updateUI();
+}
+function renderPlateAuction(){
+if(!plateAuctionState.plate) return; document.getElementById('plate-auc-timer').textContent = `⏱️ ${plateAuctionState.timeLeft} ث`; document.getElementById('plate-auc-badge').innerHTML = getRarityBadge(plateAuctionState.plate.rarity); document.getElementById('plate-auc-text').textContent = plateAuctionState.plate.text; document.getElementById('plate-auc-highest').textContent = plateAuctionState.highestBidder; document.getElementById('plate-auc-current').textContent = formatMoney(plateAuctionState.currentBid); document.getElementById('plate-auc-buyout').textContent = plateAuctionState.buyout.toLocaleString();
+}
+
+function renderStocks(){
+const el = document.getElementById('stocks-list'); if(!state.stocks || state.stocks.length===0) return;
+el.innerHTML = state.stocks.map(s => {
+const owned = state.portfolio[s.id] || 0; const prev = s.history.length > 1 ? s.history[s.history.length-2] : s.price; const diff = s.price - prev; const isUp = diff >= 0; const colorClass = isUp ? 'text-emerald-400' : 'text-rose-400';
+return `<div class="glass-card rounded-3xl p-5 space-y-3"><div class="flex justify-between items-center"><div><h3 class="font-black text-white">${s.name}</h3></div><div class="text-left"><div class="font-black text-lg ${colorClass}">${formatMoney(s.price)}</div></div></div><div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center"><span class="text-xs text-slate-400">أسهمك:</span><span class="font-black text-amber-400">${owned}</span></div><div class="flex gap-2"><input type="number" id="stock-input-${s.id}" placeholder="العدد" class="w-1/3 bg-slate-900 border border-slate-700 rounded-xl px-2 py-2 text-white text-center text-sm"><button onclick="buyStock('${s.id}')" class="flex-1 btn-emerald text-white font-bold py-2 rounded-xl text-xs">شراء</button><button onclick="sellStock('${s.id}')" class="flex-1 btn-gold text-slate-950 font-bold py-2 rounded-xl text-xs">بيع</button></div></div>`;
+}).join('');
+}
+function buyStock(id){
+const s = state.stocks.find(x=>x.id===id); if(!s) return; const qty = Number(document.getElementById(`stock-input-${id}`).value);
+if(isNaN(qty) || qty <= 0){ showToast('أدخل عدداً صحيحاً','error'); return; } const cost = s.price * qty;
+if(state.money < cost){ showToast('رصيدك لا يكفي','error'); return; }
+state.money -= cost; state.portfolio[id] = (state.portfolio[id] || 0) + qty; playSound('cash'); showToast(`اشتريت ${qty} سهم`,'success'); updateUI();
+}
+function sellStock(id){
+const s = state.stocks.find(x=>x.id===id); if(!s) return; const qty = Number(document.getElementById(`stock-input-${id}`).value);
+if(isNaN(qty) || qty <= 0){ showToast('أدخل عدداً صحيحاً','error'); return; } const owned = state.portfolio[id] || 0;
+if(owned < qty){ showToast('لا تملك هذا العدد','error'); return; }
+state.money += s.price * qty; state.portfolio[id] -= qty; if(state.portfolio[id] <= 0) delete state.portfolio[id];
+playSound('cash'); showToast(`بعت ${qty} سهم`,'success'); updateUI();
+}
+
+function renderRealEstate() {
+const el = document.getElementById('realestate-list'); if(!el) return;
+el.innerHTML = REAL_ESTATE.map(r => {
+const owned = state.realEstate[r.id] || 0;
+return `<div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+<div><h4 class="font-bold text-white text-sm">${r.name}</h4><span class="text-xs text-slate-400">دخل: ${formatMoney(r.income)}/يوم</span></div>
+<div class="text-left"><div class="text-xs text-slate-400 mb-1">تملك: ${owned}</div><button onclick="buyRealEstate('${r.id}')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">شراء (${formatMoney(r.price)})</button></div>
+</div>`;
+}).join('');
+}
+function buyRealEstate(id) {
+const prop = REAL_ESTATE.find(x=>x.id===id); if(!prop) return;
+if(state.money < prop.price) { showToast('رصيدك لا يكفي','error'); return; }
+state.money -= prop.price; state.realEstate[id] = (state.realEstate[id] || 0) + 1;
+showToast(`اشتريت ${prop.name}!`, 'success'); updateUI();
+}
+
+function buySocialMedia() {
+if(state.money < 5000) { showToast('تحتاج $5,000','error'); return; }
+state.money -= 5000; addFame(100); showToast('📱 تم زيادة الشهرة والمتابعين!', 'success'); updateUI();
+}
+function hireCelebrity() {
+if(state.money < 50000) { showToast('تحتاج $50,000','error'); return; }
+state.money -= 50000; addFame(1000); showToast('🌟 المشهور روج لمعرضك!', 'success'); updateUI();
+}
+function playCasino(color) {
+const betStr = document.getElementById('casino-bet').value; const bet = Number(betStr);
+if(isNaN(bet) || bet <= 0) { showToast('أدخل مبلغاً صحيحاً','error'); return; }
+if(state.money < bet) { showToast('رصيدك لا يكفي','error'); return; }
+state.money -= bet;
+const roll = Math.random();
+let win = 0; let resColor = 'أحمر';
+if(roll < 0.47) resColor = 'أحمر';
+else if(roll < 0.94) resColor = 'أسود';
+else resColor = 'أخضر';
+
+if(color === resColor) {
+if(color === 'green') win = bet * 14; else win = bet * 2;
+state.money += win; playSound('cash'); showToast(`🎉 فزت! اللون كان ${resColor} وربحت ${formatMoney(win)}`, 'success');
+} else {
+playSound('error'); showToast(`😢 خسرت! اللون كان ${resColor}`, 'error');
+}
+document.getElementById('casino-bet').value = '';
+updateUI();
+}
+
+function hireStaff(type){ const cost = state.staffCosts[type]; if(state.money < cost){ playSound('error'); showToast('رصيدك لا يكفي','error'); return; } state.money -= cost; if(type==='seller') state.staff.sellers++; else state.staff.marketers++; playSound('cash'); updateUI(); }
+function processStaffSales(){ let sold = 0; for(let i=0;i<state.staff.sellers;i++){ const sellable = state.garageCars.filter(c=>c.listedForSale); if(sellable.length===0) break; const car = sellable[Math.floor(Math.random()*sellable.length)]; const idx = state.garageCars.findIndex(c=>c.id===car.id); if(idx===-1) continue; state.money += Math.round(car.listPrice*0.95); state.garageCars.splice(idx,1); state.offers = state.offers.filter(o=>o.carId!==car.id); sold++; addXP(10); } return sold; }
+
+function renderLeaderboard(){
+const el = document.getElementById('leaderboard-list'); if(!el) return;
+let all = [{name:"أنت (ملك المعرض)", money:state.money, isMe:true, isInvestor:false}, ...state.leaderboard];
+all.sort((a,b)=> b.money - a.money);
+el.innerHTML = all.map((d, i) => {
+const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1); const isMe = d.isMe; const nameColor = isMe ? 'text-amber-400 text-lg' : 'text-white'; const investorBadge = d.isInvestor ? '<span class="text-[10px] bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded font-black ml-1">⭐ مستثمر النخبة</span>' : '';
+return `<div class="flex items-center justify-between p-3 rounded-xl border ${isMe?'border-amber-500 bg-amber-950/20':'border-slate-800 bg-slate-950/60'}"><div class="flex items-center gap-3"><span class="font-black text-slate-400 w-6 text-center">${medal}</span><span class="font-bold ${nameColor}">${d.name} ${investorBadge}</span></div><div class="flex items-center gap-3"><span class="font-black ${isMe?'text-amber-400':'text-emerald-400'} text-sm">${formatMoney(d.money)}</span>${!isMe?`<button onclick="donateToDealer('${d.id}')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 text-[10px] font-bold px-2 py-1 rounded-lg">تصدق عليه</button>`:''}</div></div>`;
+}).join('');
+}
+function donateToDealer(id){
+const dealer = state.leaderboard.find(d=>d.id===id); if(!dealer) return;
+const amountStr = prompt(`كم تريد أن تتصدق على "${dealer.name}"؟`, "10000"); if(!amountStr) return;
+const amount = Number(amountStr); if(isNaN(amount) || amount <= 0 || state.money < amount) { showToast('مبلغ غير صالح','error'); return; }
+state.money -= amount; dealer.money += amount; dealer.isInvestor = true; playSound('cash'); showToast(`🤲 تصدقت بـ ${formatMoney(amount)} على ${dealer.name}!`, 'success'); updateUI();
+}
+function donateToAll(){
+const cost = 50000; if(state.money < cost) { showToast('تحتاج $50,000','error'); return; }
+if(!confirm("هل تريد التصدق على جميع المنافسين بمبلغ $50,000؟")) return;
+state.money -= cost; state.leaderboard.forEach(d => { d.money += 10000; d.isInvestor = true; });
+playSound('cash'); showToast(`🤲 تصدقت عليهم كلهم! الآن الجميع يتسول بفضلك!`, 'success'); updateUI();
+}
+
+function inspectCar(id){ const c = state.marketCars.find(x=>x.id===id); if(!c || c.inspected) return; if(state.money<250){ showToast('تحتاج $250','error'); return; } state.money -= 250; c.inspected = true; if(c.hiddenFlaw.cost>0){ c.minAcceptPrice = Math.max(2000, c.minAcceptPrice - Math.round(c.hiddenFlaw.cost*0.7)); showToast('عيب: '+c.hiddenFlaw.name,'warning'); } else showToast('الفحص ممتاز!','success'); updateUI(); }
+function openNegotiate(id){
+const c = state.marketCars.find(x=>x.id===id); if(!c) return; activeNegCarId = id;
+document.getElementById('neg-car-name').textContent = `${c.brand} ${c.model}`; document.getElementById('neg-asking-price').textContent = formatMoney(c.askingPrice);
+document.getElementById('btn-buy-direct').textContent = `شراء (${formatMoney(c.askingPrice)})`;
+const sl = document.getElementById('neg-slider'); sl.min = Math.max(1000, Math.round((c.askingPrice*0.55)/100)*100); sl.max = c.askingPrice; sl.value = Math.round((c.askingPrice*0.85)/100)*100; updateMoodUI(c.sellerMood||100); updateNegSlider(); openModal('modal-negotiate');
+}
+function updateMoodUI(m){ const bar = document.getElementById('neg-mood-bar'); const text = document.getElementById('neg-mood-text'); const d = Math.max(20,m); bar.style.width = d+'%'; if(d>=70){ bar.className='h-full bg-emerald-500 transition-all'; text.textContent='😊 هادئ'; }else if(d>=40){ bar.className='h-full bg-amber-500 transition-all'; text.textContent='😐 جدي'; }else { bar.className='h-full bg-orange-500 transition-all'; text.textContent='🧐 متمسك'; } }
+function updateNegSlider(){ const c = state.marketCars.find(x=>x.id===activeNegCarId); if(!c) return; const o = Number(document.getElementById('neg-slider').value); document.getElementById('neg-slider-val').textContent = formatMoney(o); }
+function submitNegotiation(){
+const c = state.marketCars.find(x=>x.id===activeNegCarId); if(!c) return; const o = Number(document.getElementById('neg-slider').value); if(o>=c.askingPrice){ buyAtCurrentPrice(); return; }
+const bonus = state.level*150; c.minAcceptPrice = Math.max(1500, c.minAcceptPrice-50);
+if(o+bonus>=c.minAcceptPrice){ c.askingPrice = o; document.getElementById('neg-asking-price').textContent = formatMoney(c.askingPrice); document.getElementById('btn-buy-direct').textContent = `شراء (${formatMoney(o)})`; const sl = document.getElementById('neg-slider'); sl.max = c.askingPrice; sl.value = o; updateNegSlider(); playSound('cash'); }
+else { c.sellerMood = Math.max(20, (c.sellerMood||100)-20); updateMoodUI(c.sellerMood); playSound('click'); }
+updateUI();
+}
+function buyAtCurrentPrice(){ if(!activeNegCarId) return; closeModal('modal-negotiate'); directBuy(activeNegCarId); }
+function directBuy(id){
+const idx = state.marketCars.findIndex(x=>x.id===id); if(idx===-1) return; const c = state.marketCars[idx];
+if(state.garageCars.length>=state.garageCapacity){ showToast('المعرض ممتلئ!','error'); return; } if(state.money<c.askingPrice){ showToast('رصيدك لا يكفي','error'); return; }
+state.money -= c.askingPrice; state.marketCars.splice(idx,1); state.garageCars.push({...c, totalCost:c.askingPrice, listedForSale:false, listPrice:0}); addXP(15); playSound('cash'); showToast(`اشتريت ${c.brand}`,'success'); updateUI();
+}
+
+function openBuyerNeg(id){
+const o = state.offers.find(x=>x.id===id); if(!o) return; const c = state.garageCars.find(x=>x.id===o.carId); if(!c) return;
+activeBuyerOfferId = id; if(!o.maxBudget){ const mv = getEffectiveValue(c); o.maxBudget = Math.round((Math.max(o.offerPrice*1.12, mv*1.25))/50)*50; }
+if(!o.mood) o.mood = 100; document.getElementById('bneg-buyer-name').textContent = o.buyerName; refreshBuyerNeg(o,c); openModal('modal-buyer-negotiate');
+}
+function refreshBuyerNeg(o,c){
+const profit = o.offerPrice - c.totalCost; document.getElementById('bneg-current-offer').textContent = formatMoney(o.offerPrice); document.getElementById('bneg-current-profit').textContent = (profit>=0?'+':'')+formatMoney(profit); document.getElementById('bneg-current-profit').className = `font-bold ${profit>=0?'text-emerald-400':'text-rose-400'}`;
+document.getElementById('btn-bneg-accept').textContent = `بيع (${formatMoney(o.offerPrice)})`; const sl = document.getElementById('bneg-slider'); sl.min = o.offerPrice; sl.max = Math.max(o.offerPrice+1000, Math.round((o.maxBudget*1.35)/100)*100); sl.value = Math.min(sl.max, Math.round((o.offerPrice*1.12)/100)*100);
+updateBuyerMoodUI(o.mood); updateBuyerNegSlider();
+}
+function updateBuyerMoodUI(m){ const bar = document.getElementById('bneg-mood-bar'); const d = Math.max(25,m); bar.style.width = d+'%'; }
+function updateBuyerNegSlider(){ const o = state.offers.find(x=>x.id===activeBuyerOfferId); if(!o) return; const asked = Number(document.getElementById('bneg-slider').value); document.getElementById('bneg-slider-val').textContent = formatMoney(asked); }
+function submitBuyerNegotiation(){
+const o = state.offers.find(x=>x.id===activeBuyerOfferId); if(!o) return; const c = state.garageCars.find(x=>x.id===o.carId); if(!c) return;
+const asked = Number(document.getElementById('bneg-slider').value); if(asked<=o.offerPrice){ acceptCurrentBuyerOffer(); return; }
+const bonus = state.level*150; o.maxBudget += 100;
+if(asked<=o.maxBudget+bonus){ o.offerPrice = asked; playSound('cash'); refreshBuyerNeg(o,c); } else { o.mood = Math.max(25, o.mood-15); playSound('click'); refreshBuyerNeg(o,c); }
+updateUI();
+}
+function acceptCurrentBuyerOffer(){ if(!activeBuyerOfferId) return; const id = activeBuyerOfferId; closeModal('modal-buyer-negotiate'); acceptOffer(id); }
+
+function renderAuctionHalls(){
+const g = document.getElementById('halls-cards-grid');
+g.innerHTML = AUCTION_HALLS.map(h=>`<div onclick="enterHall('${h.id}')" class="glass-card cursor-pointer rounded-3xl p-5 flex flex-col justify-between space-y-4 border-2 ${h.borderClass} bg-gradient-to-b ${h.bgGradient}"><div class="space-y-2.5"><div class="flex justify-between items-center"><span class="text-3xl">${h.icon}</span></div><h3 class="text-base font-black text-white">${h.name}</h3><p class="text-xs text-slate-300/80">${h.desc}</p></div><div class="pt-3 border-t border-white/10 space-y-2"><div class="flex justify-between items-center text-[11px]"><span class="text-slate-400">النطاق:</span><span class="font-black text-emerald-400">${h.priceRange}</span></div><button class="w-full btn-gold text-slate-950 font-black py-2 rounded-xl text-xs">دخول ➔</button></div></div>`).join('');
+}
+function enterHall(id){ playSound('click'); document.getElementById('auction-halls-selector').classList.add('hidden'); document.getElementById('auction-room-container').classList.remove('hidden'); startAuction(id); }
+function exitAuctionHall(){ clearInterval(auctionState.timerId); auctionState.active=false; document.getElementById('auction-room-container').classList.add('hidden'); document.getElementById('auction-halls-selector').classList.remove('hidden'); }
+function rerollHallAuction(){ if(auctionState.hallId) startAuction(auctionState.hallId); }
+function startAuction(hallId){
+clearInterval(auctionState.timerId);
+const hall = AUCTION_HALLS.find(h=>h.id===hallId)||AUCTION_HALLS[0]; document.getElementById('active-hall-badge').textContent = `${hall.icon} ${hall.name}`;
+const t = hall.cars[Math.floor(Math.random()*hall.cars.length)]; const startBid = Math.round((t.baseVal*0.55)/hall.bidStep)*hall.bidStep;
+auctionState = { active:true, hallId:hall.id, car: {id:'auc_'+Date.now(), brand:t.brand, model:t.model, year:t.year, type:t.type, rarity:t.rarity, color:t.color, baseFullValue:t.baseVal, hp:t.hp, mileage:0, bodyCond:100, mechCond:100, turboStage:0, hiddenFlaw:{name:'سليمة',cost:0}, marketValue:t.baseVal}, currentBid:startBid, highestBidder:'الافتتاح', isPlayerHighest:false, timeLeft:20, bidStep:hall.bidStep, aggression:hall.aggression, maxRivalBid: Math.round((t.baseVal*1.2)/hall.bidStep)*hall.bidStep, timerId:null };
+renderArena(); auctionState.timerId = setInterval(auctionTick, 1000);
+}
+function auctionTick(){ if(!auctionState.active) return; auctionState.timeLeft--; if(auctionState.timeLeft>1 && Math.random()<auctionState.aggression) triggerRivalBid(); if(auctionState.timeLeft<=0) finishAuction(); else renderArena(); }
+function triggerRivalBid(){ const next = auctionState.currentBid + (auctionState.bidStep); if(next<=auctionState.maxRivalBid){ auctionState.currentBid = next; auctionState.highestBidder = RIVAL_BIDDERS[Math.floor(Math.random()*RIVAL_BIDDERS.length)]; auctionState.isPlayerHighest = false; playSound('bid'); } }
+function placePlayerBid(m){
+if(!auctionState.active) return; const nb = auctionState.currentBid + (auctionState.bidStep*m);
+if(state.garageCars.length>=state.garageCapacity){ showToast('المعرض ممتلئ!','error'); return; } if(state.money<nb){ showToast('رصيدك لا يكفي','error'); return; }
+auctionState.currentBid = nb; auctionState.highestBidder = 'أنت'; auctionState.isPlayerHighest = true; playSound('bid'); renderArena();
+}
+function instantBuy(){
+if(!auctionState.active || !auctionState.car) return; const p = auctionState.car.baseFullValue;
+if(state.garageCars.length>=state.garageCapacity){ showToast('المعرض ممتلئ','error'); return; } if(state.money<p){ showToast('رصيدك لا يكفي','error'); return; }
+clearInterval(auctionState.timerId); auctionState.active = false; state.money -= p; state.garageCars.push({...auctionState.car, totalCost:p, listedForSale:false, listPrice:0}); addXP(50); playSound('cash'); renderArena(); updateUI();
+}
+function finishAuction(){
+clearInterval(auctionState.timerId); auctionState.active = false;
+if(auctionState.isPlayerHighest && state.money>=auctionState.currentBid && state.garageCars.length<state.garageCapacity){ state.money -= auctionState.currentBid; state.garageCars.push({...auctionState.car, totalCost:auctionState.currentBid, listedForSale:false, listPrice:0}); addXP(40); playSound('cash'); showToast(`🏆 ربحت المزاد!`,'success'); }
+else { showToast(`خسرت المزاد`,'warning'); }
+renderArena(); updateUI();
+}
+function renderArena(){
+const a = document.getElementById('auction-arena'); if(!auctionState.car) return; const c = auctionState.car; const step = auctionState.bidStep;
+a.innerHTML = `<div class="glass-card rounded-3xl p-6 space-y-5 border-2 ${auctionState.active?'border-rose-500/50 auction-live-glow':'border-slate-700'}"><div class="flex justify-between items-center"><div class="flex items-center gap-2">${getRarityBadge(c.rarity)}</div><div class="bg-slate-950 px-3 py-1 rounded-xl font-black text-sm text-amber-400">⏱️ ${auctionState.active?auctionState.timeLeft+' ث':'انتهى'}</div></div><div class="text-center"><h3 class="text-2xl font-black text-white">${c.brand} ${c.model}</h3></div><div class="bg-slate-950/80 rounded-2xl p-4 border border-slate-800">${getCarSVG(c.type,c.color)}</div><div class="grid grid-cols-2 gap-3 bg-slate-900/90 p-4 rounded-2xl border border-slate-800 text-center"><div><span class="text-xs text-slate-400 block">أعلى مزايدة</span><span class="text-xl font-black text-amber-400">${formatMoney(auctionState.currentBid)}</span></div><div><span class="text-xs text-slate-400 block">صاحب العرض</span><span class="text-sm font-black ${auctionState.isPlayerHighest?'text-emerald-400':'text-white'} block">${auctionState.highestBidder}</span></div></div>${auctionState.active?`<div class="space-y-3"><div class="grid grid-cols-3 gap-2"><button onclick="placePlayerBid(1)" class="btn-gold text-slate-950 font-black py-3 rounded-xl text-xs">+${formatMoney(step)}</button><button onclick="placePlayerBid(5)" class="btn-purple text-white font-black py-3 rounded-xl text-xs">+${formatMoney(step*5)} 🔥</button></div><button onclick="instantBuy()" class="w-full btn-emerald text-white font-black py-3 rounded-xl text-xs">⚡ شراء مباشر</button></div>`:`<button onclick="rerollHallAuction()" class="w-full btn-purple text-white font-black py-3 rounded-xl text-sm">🔄 مزاد جديد</button>`}</div>`;
+}
+
+function getEffectiveValue(car){ const cond = (car.bodyCond+car.mechCond)/200; const turbo = 1+(car.turboStage*0.14); const flaw = car.hiddenFlaw.cost>0?car.hiddenFlaw.cost*1.2:0; let ev = 1; if(state.currentEvent.multType==='all'||state.currentEvent.multType===car.type) ev = state.currentEvent.mult; const fameB = 1+(state.fame/10000); return Math.max(1000, Math.round(((car.baseFullValue*(0.65+cond*0.35)*turbo)-flaw)*ev*fameB/100)*100); }
+function openTuning(id){ activeTuneCarId = id; renderTuning(); openModal('modal-tuning'); }
+function renderTuning(){
+const c = state.garageCars.find(x=>x.id===activeTuneCarId); if(!c) return;
+document.getElementById('tune-car-name').textContent = `${c.brand} ${c.model}`;
+const bodyCost = c.bodyCond<100?(100-c.bodyCond)*35:0; const mechCost = (c.mechCond<100?(100-c.mechCond)*40:0)+c.hiddenFlaw.cost;
+const nextStage = c.turboStage+1; const turboCost = nextStage<=3?Math.round(c.baseFullValue*0.12*nextStage/100)*100:0;
+document.getElementById('tune-options-list').innerHTML = `<div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 flex justify-between items-center"><div><h4 class="font-bold text-sm text-white">🎨 سمكرة</h4></div><button onclick="applyUpgrade('body',${bodyCost})" ${bodyCost===0?'disabled':''} class="btn-blue disabled:opacity-40 text-white font-bold px-3 py-2 rounded-xl text-xs">${bodyCost===0?'✅':formatMoney(bodyCost)}</button></div><div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 flex justify-between items-center"><div><h4 class="font-bold text-sm text-white">⚙️ صيانة</h4></div><button onclick="applyUpgrade('mech',${mechCost})" ${mechCost===0?'disabled':''} class="btn-blue disabled:opacity-40 text-white font-bold px-3 py-2 rounded-xl text-xs">${mechCost===0?'✅':formatMoney(mechCost)}</button></div><div class="bg-slate-900/90 p-3 rounded-xl border border-amber-500/30 flex justify-between items-center"><div><h4 class="font-bold text-sm text-amber-400">🚀 تيربو Stage ${nextStage<=3?nextStage:'MAX'}</h4></div><button onclick="applyUpgrade('turbo',${turboCost})" ${nextStage>3?'disabled':''} class="btn-gold disabled:opacity-40 text-slate-950 font-black px-3 py-2 rounded-xl text-xs">${nextStage>3?'👑':formatMoney(turboCost)}</button></div>`;
+}
+function applyUpgrade(type,cost){
+const c = state.garageCars.find(x=>x.id===activeTuneCarId); if(!c || cost<=0) return; if(state.money<cost){ showToast('رصيدك لا يكفي','error'); return; }
+state.money -= cost; c.totalCost += cost; playSound('repair'); addXP(10);
+if(type==='body'){ c.bodyCond=100; } else if(type==='mech'){ c.mechCond=100; c.hiddenFlaw={name:'سليمة',cost:0}; } else if(type==='turbo'){ c.turboStage++; c.hp+=45; }
+renderTuning(); updateUI();
+}
+function openSale(id){ activeSaleCarId = id; const c = state.garageCars.find(x=>x.id===id); if(!c) return; const mv = getEffectiveValue(c); document.getElementById('sale-car-name').textContent = `${c.brand} ${c.model}`; document.getElementById('sale-price-input').value = Math.round((mv*1.15)/100)*100; updateProfitPreview(); openModal('modal-list-sale'); }
+function updateProfitPreview(){ const c = state.garageCars.find(x=>x.id===activeSaleCarId); if(!c) return; const p = Number(document.getElementById('sale-price-input').value)||0; const r = p/getEffectiveValue(c); document.getElementById('sale-chance-hint').textContent = r<=1.08 ? '🔥 سعر مغري!' : (r<=1.25 ? '⚖️ سعر ممتاز' : '⚠️ سعر مبالغ فيه'); }
+function confirmListForSale(){ const c = state.garageCars.find(x=>x.id===activeSaleCarId); if(!c) return; const p = Number(document.getElementById('sale-price-input').value); if(!p||p<=0){ showToast('سعر خطأ','error'); return; } c.listedForSale = true; c.listPrice = p; closeModal('modal-list-sale'); if(Math.random()>0.25) generateOfferForCar(c); updateUI(); }
+function unlistCar(id){ const c = state.garageCars.find(x=>x.id===id); if(!c) return; c.listedForSale = false; state.offers = state.offers.filter(o=>o.carId!==id); updateUI(); }
+
+function generateOfferForCar(car){
+const existing = state.offers.filter(o=>o.carId===car.id).length; if(existing>=2) return;
+const mv = getEffectiveValue(car); const ratio = car.listPrice/mv; let chance = 0.85-(ratio-1)*1.2+(state.decorLevel*0.04)+(state.fame/5000);
+if(state.ads.socialDays>0) chance += 0.35; if(Math.random()>chance) return;
+const isVIP = (state.ads.vipDays>0 && Math.random()<0.65) || (state.fame>500 && Math.random()<0.3);
+const buyer = BUYER_NAMES[Math.floor(Math.random()*BUYER_NAMES.length)]; const maxW = mv*1.24*Math.min(1.8, 1+(state.fame/5000));
+let raw = car.listPrice*(0.86+Math.random()*0.14)*(isVIP?1.05:1); if(raw>maxW) raw = maxW*(0.93+Math.random()*0.07);
+state.offers.push({id:'off_'+Date.now()+'_'+Math.random().toString(36).substr(2,5), carId:car.id, buyerName:buyer, isVIP, offerPrice:Math.round(raw/50)*50, maxBudget:Math.round(maxW/50)*50, mood:100});
+}
+function acceptOffer(id){
+const o = state.offers.find(x=>x.id===id); if(!o) return; const carIdx = state.garageCars.findIndex(c=>c.id===o.carId); if(carIdx===-1) return;
+const car = state.garageCars[carIdx]; const profit = o.offerPrice - car.totalCost; state.money += o.offerPrice; state.totalProfit += profit;
+state.garageCars.splice(carIdx,1); state.offers = state.offers.filter(x=>x.carId!==car.id); addXP(profit>0?25:10); addFame(Math.round(o.offerPrice/2000)); playSound('cash'); updateUI();
+}
+function rejectOffer(id){ state.offers = state.offers.filter(x=>x.id!==id); playSound('click'); updateUI(); }
+
+function upgradeGarage(){ if(state.garageCapacity>=50) return; if(state.money<state.upgradeCost){ showToast(`تحتاج ${formatMoney(state.upgradeCost)}`,'error'); return; } state.money -= state.upgradeCost; state.garageCapacity = Math.min(50, state.garageCapacity+2); state.upgradeCost = Math.round(state.upgradeCost*1.45); addXP(20); updateUI(); }
+function upgradeDecor(){ if(state.decorLevel>=5) return; if(state.money<state.decorCost){ showToast('رصيدك لا يكفي','error'); return; } state.money -= state.decorCost; state.decorLevel++; state.decorCost = Math.round(state.decorCost*1.7); addXP(25); updateUI(); }
+function renderBank(){ const b = document.getElementById('bank-status-box'); if(state.loan){ b.innerHTML = `<div class="space-y-2 text-xs"><div class="flex justify-between"><span class="text-slate-400">القرض المتبقي:</span><span class="font-black text-rose-400 text-sm">${formatMoney(state.loan.remaining)}</span></div></div><button onclick="payOffLoan()" class="w-full btn-emerald text-white font-bold py-2.5 rounded-xl text-xs mt-2">سداد (${formatMoney(state.loan.remaining)})</button>`; } else { b.innerHTML = `<p class="text-xs text-slate-400">اطلب المبلغ من الأسفل</p>`; } }
+function takeCustomLoan(){ const v = Number(document.getElementById('loan-input').value); if(!v||v<=0){ showToast('أدخل مبلغاً صحيحاً','error'); return; } if(state.loan){ showToast('لديك قرض قائم','error'); return; } state.money += v; state.loan = { remaining: Math.round(v*1.15) }; document.getElementById('loan-input').value = ''; playSound('cash'); updateUI(); }
+function payOffLoan(){ if(!state.loan) return; if(state.money<state.loan.remaining){ showToast('رصيدك لا يكفي','error'); return; } state.money -= state.loan.remaining; state.loan = null; playSound('cash'); updateUI(); }
+
+function nextDay(){
+state.day++; playSound('click');
+const upkeep = 300 + (state.garageCars.length*120) + (state.decorLevel*100); state.money = Math.max(0, state.money - upkeep);
+// دخل العقارات
+let propIncome = 0; REAL_ESTATE.forEach(r => { if(state.realEstate[r.id]) propIncome += r.income * state.realEstate[r.id]; });
+state.money += propIncome;
+
+if(state.loan){ const pay = Math.min(state.loan.remaining, Math.round(state.loan.remaining*0.05)); state.money = Math.max(0, state.money - pay); state.loan.remaining -= pay; if(state.loan.remaining<=0) state.loan=null; }
+const staffCost = state.staff.sellers*300 + state.staff.marketers*400; if(staffCost>0) state.money = Math.max(0, state.money - staffCost);
+processStaffSales();
+const fameFromMarketers = state.staff.marketers*15; if(fameFromMarketers>0) addFame(fameFromMarketers);
+if(state.ads.socialDays>0) state.ads.socialDays--; if(state.ads.vipDays>0) state.ads.vipDays--;
+
+state.currentEvent = DAILY_EVENTS[Math.floor(Math.random()*DAILY_EVENTS.length)]; generateMarketCars(); if(state.plateMarket.length<8) generatePlateMarket(); updateStocks();
+state.leaderboard.forEach(d => { d.money = Math.round(d.money * (1 + (Math.random()*0.15))); });
+state.garageCars.forEach(c=>{ if(c.listedForSale) generateOfferForCar(c); });
+showToast(`يوم ${state.day}! مصاريف: -${formatMoney(upkeep)}. دخل عقارات: +${formatMoney(propIncome)}.`,'info'); updateUI();
+}
+
+function switchTab(t){
+playSound('click');
+['market','auction','garage','offers','plates','stocks','invest','staff','management'].forEach(x=>{
+const v = document.getElementById(`view-${x}`); if(v) v.classList.add('hidden');
+const b = document.getElementById(`tab-${x}`); if(b){ b.classList.remove('bg-amber-500','text-slate-950','shadow-md'); b.classList.add('text-slate-300'); }
+});
+document.getElementById(`view-${t}`).classList.remove('hidden');
+const ab = document.getElementById(`tab-${t}`); if(ab){ ab.classList.add('bg-amber-500','text-slate-950','shadow-md'); ab.classList.remove('text-slate-300'); }
+if(t==='auction') renderAuctionHalls();
+}
+function openModal(id){ const m = document.getElementById(id); m.classList.remove('hidden'); m.classList.add('flex'); }
+function closeModal(id){ const m = document.getElementById(id); m.classList.add('hidden'); m.classList.remove('flex'); }
+
+window.onload = function(){
+generateMarketCars(); generatePlateMarket(); initStocks(); renderAuctionHalls(); updateUI();
+};
+</script>
+</body>
+</html>
